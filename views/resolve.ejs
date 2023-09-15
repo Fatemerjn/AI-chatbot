@@ -616,7 +616,7 @@
                                     <div class="title">Chatbot window size</div>
                                     <div class="subtitle">Set chatbot widget size</div>
                                     <div style="display: flex;margin-bottom: 15px;margin-left: 25px;">
-                                        <div class="toggle-button on"></div>
+                                        <div class="toggle-button on" onclick="hideExpand(); toggleStatus(this);"></div>
                                         <div class="label" style="font-weight: 100;">‌ Allow expand</div>
                                     </div>
                                     <div class="input-container">
@@ -675,7 +675,7 @@
                                     <div class="title">Live agent requests</div>
                                     <div class="subtitle">Send notification to your Email when client requests Live
                                         Agent</div>
-                                    <div class="toggle-button"></div>
+                                    <div class="toggle-button" onclick="toggleStatus(this);"></div>
                                     <div class="subtitle">Scenarios when live agent should be notified</div>
                                     <input type="text" class="inpt bb-bt" id="live-agent-req">
                                 </div>
@@ -684,7 +684,7 @@
                                     <div class="flex-container">
                                         <div class="subtitle">Send chat transcripts to your notification email once they
                                             are finished</div>
-                                        <div class="toggle-button on"></div>
+                                        <div class="toggle-button on" onclick="toggleStatus(this);"></div>
                                     </div>
                                 </div>
                                 <div class="glass-effect">
@@ -692,14 +692,14 @@
                                     <div class="flex-container">
                                         <div class="subtitle">Add short summary of the conversation to the transcript
                                         </div>
-                                        <div class="toggle-button on"></div>
+                                        <div class="toggle-button on" onclick="toggleStatus(this);"></div>
                                     </div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Include Unresolved Requests</div>
                                     <div class="flex-container">
                                         <div class="subtitle">Add Unresolved requests to the transcript</div>
-                                        <div class="toggle-button on"></div>
+                                        <div class="toggle-button on" onclick="toggleStatus(this);"></div>
                                     </div>
                                 </div>
                             </div>
@@ -710,12 +710,12 @@
                                 <div class="glass-effect">
                                     <div class="title">Require name and email before chat</div>
                                     <div class="subtitle">Always ask for name and email before chat</div>
-                                    <div class="toggle-button"></div>
+                                    <div class="toggle-button" onclick="toggleStatus(this);"></div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Collect feedback</div>
                                     <div class="subtitle">Ask for feedback after chat is finished</div>
-                                    <div class="toggle-button on"></div>
+                                    <div class="toggle-button on" onclick="toggleStatus(this);"></div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Welcome message(s)</div>
@@ -821,21 +821,25 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                             <div class="content">
                                 <div class="glass-effect">
                                     <div class="title">Temperature</div>
-                                    <div class="subtitle">Controls randomness: Lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive. Higher temperature results in more random completions.</div>
-                                    
+                                    <div class="subtitle">Controls randomness: Lowering results in less random
+                                        completions. As the temperature approaches zero, the model will become
+                                        deterministic and repetitive. Higher temperature results in more random
+                                        completions.</div>
+
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Response style</div>
-                                    <div class="subtitle">Traditional whole message at once or ChatGPT style stream of messages</div>
+                                    <div class="subtitle">Traditional whole message at once or ChatGPT style stream of
+                                        messages</div>
                                     <div class="buttons">
                                         <button onclick="showPreview('chatstyle')">Chat style</button>
                                         <button onclick="showPreview('chatgptstyle')">ChatGPT style</button>
                                     </div>
                                     <div class="preview" id="chatstyle-preview">
-                                      
+
                                     </div>
                                     <div class="detail" id="chatgptstyle-preview">
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -1015,10 +1019,20 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             colorCircle.style.backgroundColor = color;
         }
 
-        var toggleButton = document.querySelector('.toggle-button');
+        // var toggleButton = document.querySelector('.toggle-button');
 
-        toggleButton.addEventListener('click', function () {
-            toggleButton.classList.toggle('on');
+        // toggleButton.addEventListener('click', function () {
+        //     toggleButton.classList.toggle('on');
+        //     var hid = document.getElementsByClassName("glass-effect-hide");
+        //     for (var i = 0; i < hid.length; i++) {
+        //         hid[i].classList.toggle("hidden");
+        //     }
+        //     var hidd = document.getElementsByClassName("label-hide");
+        //     for (var i = 0; i < hidd.length; i++) {
+        //         hidd[i].classList.toggle("hidden");
+        //     }
+        // });
+        function hideExpand() {
             var hid = document.getElementsByClassName("glass-effect-hide");
             for (var i = 0; i < hid.length; i++) {
                 hid[i].classList.toggle("hidden");
@@ -1027,7 +1041,25 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             for (var i = 0; i < hidd.length; i++) {
                 hidd[i].classList.toggle("hidden");
             }
-        });
+        }
+
+        function toggleStatus(button) {
+            button.classList.toggle('on');
+
+            var status = button.classList.contains('on') ? 'on' : 'off';
+            var buttonId = button.id;
+
+            // Send status to the server
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('POST', '/status', true);
+            // xhr.setRequestHeader('Content-Type', 'application/json');
+            // xhr.onreadystatechange = function () {
+            //   if (xhr.readyState === 4 && xhr.status === 200) {
+            //     console.log('Status sent to the server successfully.');
+            //   }
+            // };
+            // xhr.send(JSON.stringify({ id: buttonId, status: status }));
+        }
     </script>
 
     <script src="https://kit.fontawesome.com/bf8bc74aaf.js" crossorigin="anonymous"></script>
