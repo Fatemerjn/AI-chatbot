@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Bles</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
     <style>
@@ -126,18 +127,33 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        nav button.continue-button {
-            background-color: black;
-            color: #fff;
-        }
+       
 
         nav button:hover {
             background-color: #333;
             color: #fff;
         }
 
+        .continue-button {
+            background-color: #fff;
+            border: 2px solid black;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: black;
+            color: #fff;
+        }
         .step2 {
             flex-basis: 50%;
+        }
+
+        .step.active {
+            display: block;
         }
 
         .step2-container {
@@ -188,6 +204,7 @@
             border: 0.5px solid rgb(58, 58, 58);
             color: #000000;
             height: 50px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
 
         .inpt[type="email"]:focus,
@@ -491,6 +508,12 @@
         .hidden {
             display: none;
         }
+
+        .first-step-about {
+            width: 100%;
+            height: 34vw;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
     </style>
 </head>
 
@@ -510,14 +533,42 @@
         </div>
         <div class="right-section">
             <div class="right-section-part active" id="step1">
-                <h2>Step 1: Create your first document</h2>
-                <button onclick="nextStep()">Confirm</button>
+                <h2>Let's write your first document</h2>
+                <div class="subtitle">This document is used to train your chatbot. You can always edit or add more later.</div>
+                <p>about test</p>
+                <div class="glass-effect">
+                    <textarea class="first-step-about">
+1. General Description
+test is a leading company in the [industry name] sector. Founded in [insert founding year here], we have consistently delivered high-quality solutions to our clients, making us one of the most trusted names in the industry. Our team of dedicated professionals works tirelessly to meet the unique demands of our diverse clientele.
+
+2. What Services We Provide
+At test, we specialize in a wide range of services, including:
+
+Service A: [Brief description of Service A]
+Service B: [Brief description of Service B]
+Service C: [Brief description of Service C]
+... and many more. Our focus on innovation and customer satisfaction ensures that we remain at the forefront of the industry, continually evolving our offerings to meet the ever-changing needs of our clients.
+
+3. Our Contact Information
+Address: [insert street address here], [insert city, state, zip here]
+Phone Number: [insert phone number here]
+Email: [insert contact email here]
+Website: [insert website URL here]
+
+4. Our Business Hours
+Monday - Friday: [insert opening hours, e.g., 9:00 AM - 6:00 PM]
+Saturday: [insert Saturday hours, e.g., 10:00 AM - 4:00 PM]
+Sunday: [insert Sunday hours, e.g., Closed]</textarea>
+<div style="display: flex; justify-content: end; margin-top: 10px;">
+    <button class="continue-button" onclick="nextStep()">Continue</button>
+</div>
+                </div>
             </div>
             <div class="right-section-part" id="step2">
                 <nav>
                     <p>chatbot</p>
                     <button class="share-button">share</button>
-                    <button class="continue-button">continue</button>
+                    <button class="continue-button" onclick="nextStep()">continue</button>
                 </nav>
 
                 <div class="step2-container">
@@ -723,7 +774,7 @@
                                     <textarea placeholder="Shift + Enter for new line
 Hi there!👋
 I'm here if you have any questions🙂" name="welcomeMessages" id="welcomeMessages" class="inpt bb-bt"
-                                        style="height: 50px; width: 98%;"></textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Popup message(s)</div>
@@ -731,7 +782,7 @@ I'm here if you have any questions🙂" name="welcomeMessages" id="welcomeMessag
                                     <textarea placeholder="Shift + Enter for new line
 Hi there!👋
 Want chatbot like that?" name="popupMessages" id="popupMessages" class="inpt bb-bt"
-                                        style="height: 50px; width: 98%;"></textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Predefined questions</div>
@@ -739,7 +790,7 @@ Want chatbot like that?" name="popupMessages" id="popupMessages" class="inpt bb-
                                     <textarea placeholder="Shift + Enter for new line
 Tell me about your pricing plans?👋
 How can I create chatbot??" name="conversationStarters" id="conversationStarters" class="inpt bb-bt"
-                                        style="height: 50px; width: 98%;"></textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Fallback message</div>
@@ -747,7 +798,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         an answer.<br />Eg. contact information</div>
                                     <textarea placeholder="Feel free to reach out to us at contact@company.com"
                                         name="fallbackResponse" id="fallbackResponse" class="inpt bb-bt"
-                                        style="height: 50px; width: 98%;">Sorry I don't know</textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;">Sorry I don't know</textarea>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Live agent acknowledge message</div>
@@ -756,7 +807,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         placeholder="Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you"
                                         name="liveAgentAcknowledgeMessage" id="liveAgentAcknowledgeMessage"
                                         class="inpt bb-bt"
-                                        style="height: 50px; width: 98%;">Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you</textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;">Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you</textarea>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Live agent message</div>
@@ -765,7 +816,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <textarea placeholder="Live agent was notified and will join as soon as possible"
                                         name="liveAgentWaitMessage" id="liveAgentWaitMessage"
                                         class="Interactions___StyledTextarea6-sc-6siynf-10 kpJFfg"
-                                        style="height: 50px; width: 98%;">Live agent was notified and will join as soon as possible</textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;">Live agent was notified and will join as soon as possible</textarea>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Live agent left conversation message</div>
@@ -775,7 +826,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         placeholder="I hope your issue was resolved! I'm here if you still need any help."
                                         name="liveAgentLeftMessage" id="liveAgentLeftMessage"
                                         class="Interactions___StyledTextarea7-sc-6siynf-11 koMqvw"
-                                        style="height: 50px; width: 98%;">I hope your issue was resolved! I'm here if you still need any help.</textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;">I hope your issue was resolved! I'm here if you still need any help.</textarea>
                                 </div>
                             </div>
                         </div>
@@ -812,7 +863,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <textarea class="inpt" id="customPrompt"
                                         placeholder="You are friendly Customer Support rep named Alice. You are friendly and can speak English and Spanish."
                                         name="customPrompt" maxlength="1024" rows="3" aria-invalid="false"
-                                        style="height: 50px; width: 98%;"></textarea>
+                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -861,10 +912,11 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                         <button onclick="nextStep()">Confirm</button>
                         <button onclick="previousStep()">Previous</button>
                     </div>
-                    <div class="step2" id="chatbot">
+                    <div class="step2" style="display: none;" id="chatbot">
                         <h2>Chatbot Area</h2>
+                        <div id="targetDiv"></div>
                     </div>
-                    <div class="step2" id="ai-agent">
+                    <div class="step2" style="display: none;" id="ai-agent">
                         <h2>AI agent Area</h2>
                     </div>
                 </div>
@@ -953,7 +1005,14 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
         updateStepList();
 
         function showDetail(detailId) {
-            document.getElementById(detailId).classList.add('active');
+            if (detailId == "chatbot") {
+                document.getElementById(detailId).style.display = "block";
+                document.getElementById("ai-agent").style.display = "none";
+
+            } else {
+                document.getElementById(detailId).style.display = "block";
+                document.getElementById("chatbot").style.display = "none";
+            }
             var details = document.getElementsByClassName("detail");
             for (var i = 0; i < details.length; i++) {
                 details[i].classList.remove("open");
@@ -1019,19 +1078,6 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             colorCircle.style.backgroundColor = color;
         }
 
-        // var toggleButton = document.querySelector('.toggle-button');
-
-        // toggleButton.addEventListener('click', function () {
-        //     toggleButton.classList.toggle('on');
-        //     var hid = document.getElementsByClassName("glass-effect-hide");
-        //     for (var i = 0; i < hid.length; i++) {
-        //         hid[i].classList.toggle("hidden");
-        //     }
-        //     var hidd = document.getElementsByClassName("label-hide");
-        //     for (var i = 0; i < hidd.length; i++) {
-        //         hidd[i].classList.toggle("hidden");
-        //     }
-        // });
         function hideExpand() {
             var hid = document.getElementsByClassName("glass-effect-hide");
             for (var i = 0; i < hid.length; i++) {
@@ -1048,7 +1094,6 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
 
             var status = button.classList.contains('on') ? 'on' : 'off';
             var buttonId = button.id;
-
             // Send status to the server
             // var xhr = new XMLHttpRequest();
             // xhr.open('POST', '/status', true);
@@ -1060,6 +1105,16 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             // };
             // xhr.send(JSON.stringify({ id: buttonId, status: status }));
         }
+
+        fetch('../chatbot.html')
+            .then(response => response.text())
+            .then(data => {
+                // Update the chatbot div with the fetched content
+                document.getElementById('chatbot').innerHTML = data;
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
     </script>
 
     <script src="https://kit.fontawesome.com/bf8bc74aaf.js" crossorigin="anonymous"></script>
