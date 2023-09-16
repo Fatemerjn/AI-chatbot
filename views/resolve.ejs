@@ -345,6 +345,40 @@
             display: block;
         }
 
+        .answer {
+            display: none;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            font-family: "Arial", sans-serif;
+            max-width: 95%;
+        }
+
+        .answer.open {
+            display: block;
+        }
+
+        .creativity {
+            display: none;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            font-family: "Arial", sans-serif;
+            max-width: 95%;
+        }
+
+        .creativity.open {
+            display: block;
+        }
+
         .avatar-box {
             width: 300px;
             padding: 20px;
@@ -1006,28 +1040,36 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <div class="subtitle">Traditional whole message at once or ChatGPT style stream of
                                         messages</div>
                                     <div class="buttons">
-                                        <button onclick="showPreview('chatstyle')">Chat style</button>
-                                        <button onclick="showPreview('chatgptstyle')">ChatGPT style</button>
+                                        <button onclick="showPreview('chatstyle-preview')">Chat style</button>
+                                        <button onclick="showPreview('chatgptstyle-preview')">ChatGPT style</button>
                                     </div>
                                     <div class="preview" id="chatstyle-preview">
                                         <img src="../public/stream-style.gif" alt="chat-response" width="300"
                                             height="300">
-                                            <p>test</p>
+                                            
                                     </div>
                                     <div class="preview" id="chatgptstyle-preview">
-<p>test fkdhf</p>
                                     </div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Answer style</div>
                                     <div class="subtitle">Choose between short, balanced or detailed answers</div>
                                     <div class="buttons">
-                                        <button>Short</button>
-                                        <button>Balanced</button>
-                                        <button>Detailed</button>
+                                        <button onclick="showAnswer('short-answer')">Short</button>
+                                        <button onclick="showAnswer('balanced-answer')">Balanced</button>
+                                        <button onclick="showAnswer('detailed-answer')">Detailed</button>
                                     </div>
-                                    <p>Detailed answers are more detailed and longer. They may also include additional
-                                        useful context.</p>
+                                    <div class="answer" id="short-answer">
+                                        <p></p>
+                                    </div>
+                                    <div class="answer" id="balanced-answer">
+                                        <p></p>
+                                    </div>
+                                    <div class="answer" id="detailed-answer">
+                                        <p>Detailed answers are more detailed and longer. They may also include additional
+                                            useful context.</p>
+                                    </div>
+                                    
 
                                 </div>]
                                 <div class="glass-effect">
@@ -1035,16 +1077,26 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <div class="subtitle">By adjusting this property you change the amount of creativity
                                         in the answer. The higher the value the more creative the answer will be.</div>
                                     <div class="buttons">
-                                        <button>Very Low</button>
-                                        <button>Low</button>
-                                        <button>Medium</button>
-                                        <button>High</button>
+                                        <button onclick="showCreativity('very-low')">Very Low</button>
+                                        <button onclick="showCreativity('low')">Low</button>
+                                        <button onclick="showCreativity('medium')">Medium</button>
+                                        <button onclick="showCreativity('high')">High</button>
                                     </div>
-                                    <p>This is the lowest possible creativity setting, which produces the most
-                                        conservative and predictable responses. This typically results in responses that
-                                        are highly coherent and closely related to the input request, but may also be
-                                        less creative and somewhat repetitive.</p>
-
+                                    <div class="creativity" id="very-low">
+                                        <p>This is the lowest possible creativity setting, which produces the most
+                                            conservative and predictable responses. This typically results in responses that
+                                            are highly coherent and closely related to the input request, but may also be
+                                            less creative and somewhat repetitive.</p>
+                                    </div>
+                                    <div class="creativity" id="low">
+                                        <p></p>
+                                    </div>
+                                    <div class="creativity" id="medium">
+                                        <p></p>
+                                    </div>
+                                    <div class="creativity" id="high">
+                                        <p></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1260,13 +1312,32 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
         }
 
         function showPreview(detailId) {
-            document.getElementById(detailId).classList.add('active');
             var previews = document.getElementsByClassName("preview");
             for (var i = 0; i < previews.length; i++) {
                 previews[i].classList.remove("open");
             }
 
-            var preview = document.getElementById(detailId + "-preview");
+            var preview = document.getElementById(detailId);
+            preview.classList.add("open");
+        }
+
+        function showAnswer(detailId) {
+            var previews = document.getElementsByClassName("answer");
+            for (var i = 0; i < previews.length; i++) {
+                previews[i].classList.remove("open");
+            }
+
+            var preview = document.getElementById(detailId);
+            preview.classList.add("open");
+        }
+
+        function showCreativity(detailId) {
+            var previews = document.getElementsByClassName("creativity");
+            for (var i = 0; i < previews.length; i++) {
+                previews[i].classList.remove("open");
+            }
+
+            var preview = document.getElementById(detailId);
             preview.classList.add("open");
         }
 
