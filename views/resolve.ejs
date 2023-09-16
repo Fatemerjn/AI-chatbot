@@ -127,7 +127,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-       
+
 
         nav button:hover {
             background-color: #333;
@@ -148,6 +148,7 @@
             background-color: black;
             color: #fff;
         }
+
         .step2 {
             flex-basis: 50%;
         }
@@ -315,6 +316,23 @@
         }
 
         .detail.open {
+            display: block;
+        }
+
+        .preview {
+            display: none;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            font-family: "Arial", sans-serif;
+            max-width: 95%;
+        }
+
+        .preview.open {
             display: block;
         }
 
@@ -514,6 +532,76 @@
             height: 34vw;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
+
+        .slider {
+            width: 100%;
+            height: 10px;
+            background-color: #f5f5f5;
+            position: relative;
+            margin-bottom: 50px;
+            margin-top: 50px;
+            cursor: pointer;
+        }
+
+        .slider-track {
+            width: 0;
+            height: 100%;
+            background-color: #505155;
+            position: absolute;
+            top: 0;
+            left: 5px;
+            /* Adjusted position to align with circles */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
+
+        .slider-thumb {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 5px solid #505155;
+            position: absolute;
+            top: -5px;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 2;
+            /* Ensures the large circle is above the small circles */
+        }
+
+        .slider-mark {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            top: 1px;
+            /* Adjusted position to align with line */
+        }
+
+        .slider-mark-label {
+            position: absolute;
+            top: 20px;
+            /* Adjusted position to display below the line */
+            font-size: 12px;
+            text-align: center;
+            width: 30px;
+            left: 0;
+            transform: translateX(-50%);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #000;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -534,7 +622,8 @@
         <div class="right-section">
             <div class="right-section-part active" id="step1">
                 <h2>Let's write your first document</h2>
-                <div class="subtitle">This document is used to train your chatbot. You can always edit or add more later.</div>
+                <div class="subtitle">This document is used to train your chatbot. You can always edit or add more
+                    later.</div>
                 <p>about test</p>
                 <div class="glass-effect">
                     <textarea class="first-step-about">
@@ -559,9 +648,9 @@ Website: [insert website URL here]
 Monday - Friday: [insert opening hours, e.g., 9:00 AM - 6:00 PM]
 Saturday: [insert Saturday hours, e.g., 10:00 AM - 4:00 PM]
 Sunday: [insert Sunday hours, e.g., Closed]</textarea>
-<div style="display: flex; justify-content: end; margin-top: 10px;">
-    <button class="continue-button" onclick="nextStep()">Continue</button>
-</div>
+                    <div style="display: flex; justify-content: end; margin-top: 10px;">
+                        <button class="continue-button" onclick="nextStep()">Continue</button>
+                    </div>
                 </div>
             </div>
             <div class="right-section-part" id="step2">
@@ -876,6 +965,21 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         completions. As the temperature approaches zero, the model will become
                                         deterministic and repetitive. Higher temperature results in more random
                                         completions.</div>
+                                    <div class="slider">
+                                        <div class="slider-track" id="slider-track"></div>
+                                        <div class="slider-thumb" id="slider-thumb"></div>
+                                        <div class="slider-mark" style="left: 20%;"></div>
+                                        <div class="slider-mark" style="left: 50%;"></div>
+                                        <div class="slider-mark" style="left: 70%;"></div>
+                                        <div class="slider-mark-label" style="left: 20%;">0.2</div>
+                                        <div class="slider-mark-label" style="left: 50%;">0.5</div>
+                                        <div class="slider-mark-label" style="left: 70%;">0.7</div>
+                                    </div>
+                                    <div style="display: flex; font-size: small;">
+                                        <div>The number of temperature is: ‌</div>
+                                        <div id="slider-value" class="slider-value"></div>
+                                    </div>
+
 
                                 </div>
                                 <div class="glass-effect">
@@ -887,24 +991,119 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         <button onclick="showPreview('chatgptstyle')">ChatGPT style</button>
                                     </div>
                                     <div class="preview" id="chatstyle-preview">
+                                        <img src="../public/stream-style.gif" alt="chat-response" width="300"
+                                            height="300">
+                                    </div>
+                                    <div class="preview" id="chatgptstyle-preview">
 
                                     </div>
-                                    <div class="detail" id="chatgptstyle-preview">
-
+                                </div>
+                                <div class="glass-effect">
+                                    <div class="title">Answer style</div>
+                                    <div class="subtitle">Choose between short, balanced or detailed answers</div>
+                                    <div class="buttons">
+                                        <button>Short</button>
+                                        <button>Balanced</button>
+                                        <button>Detailed</button>
                                     </div>
+                                    <p>Detailed answers are more detailed and longer. They may also include additional
+                                        useful context.</p>
+
+                                </div>
+                                <div class="detail" id="chatgptstyle-preview">
+
+                                </div>
+                                <div class="glass-effect">
+                                    <div class="title">Creativiity</div>
+                                    <div class="subtitle">By adjusting this property you change the amount of creativity
+                                        in the answer. The higher the value the more creative the answer will be.</div>
+                                    <div class="buttons">
+                                        <button>Very Low</button>
+                                        <button>Low</button>
+                                        <button>Medium</button>
+                                        <button>High</button>
+                                    </div>
+                                    <p>This is the lowest possible creativity setting, which produces the most
+                                        conservative and predictable responses. This typically results in responses that
+                                        are highly coherent and closely related to the input request, but may also be
+                                        less creative and somewhat repetitive.</p>
+
+                                </div>
+                                <div class="detail" id="chatgptstyle-preview">
+
                                 </div>
                             </div>
                         </div>
                         <div class="box" id="docs">
                             <button class="button" onclick="toggleContent('docs')">Documents</button>
                             <div class="content">
-                                <p>This is the content for box 3.</p>
+                                <div class="glass-effect">
+                                    <div class="title">Chatbot Documents</div>
+                                    <div class="subtitle">List of documents that Chatbot will use to answer requests
+                                    </div>
+                                    <table>
+                                        <tr>
+                                            <td colspan="4">
+                                                <input type="checkbox" id="table1-checkbox1"
+                                                    onclick="selectAllRows('table1')">
+
+                                                <!-- Search input and buttons -->
+                                                <div style="display: contents; margin-left: 20px;">
+                                                    <input type="text" id="table1-searchInput" placeholder="Search"
+                                                        oninput="searchRows('table1')" style="border: none;">
+                                                    <button onclick="clearSearch('table1')"
+                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
+                                                            class="fas fa-times"></i></button>
+                                                    <button onclick="searchRows('table1')"
+                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;">Refresh
+                                                        list</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" id="table1-checkbox2">
+                                                <label for="table1-checkbox2">About test</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="box" id="data-source">
                             <button class="button" onclick="toggleContent('data-source')">Data sources</button>
                             <div class="content">
-                                <p>This is the content for box 3.</p>
+                                <div class="glass-effect">
+                                    <div class="title">Data Sources</div>
+                                    <div class="subtitle">List of data sources that Chatbot will use to answer requests
+                                    </div>
+                                    <table>
+                                        <tr>
+                                            <td colspan="4">
+                                                <input type="checkbox" id="table2-checkbox1"
+                                                    onclick="selectAllRows('table2')">
+
+                                                <!-- Search input and buttons -->
+                                                <div style="display: contents; margin-left: 20px;">
+                                                    <input type="text" id="table2-searchInput" placeholder="Search"
+                                                        oninput="searchRows('table2')" style="border: none;">
+                                                    <button onclick="clearSearch('table2')"
+                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
+                                                            class="fas fa-times"></i></button>
+                                                    <button onclick="searchRows('table2')"
+                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;">Refresh
+                                                        list</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="display: grid;">
+                                                <label style="text-align: center; color: #585858;">Looks like you don't have any data sources yet</label>
+                                                <button style="width: fit-content;" class="continue-button">Add new data source</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -1106,15 +1305,98 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             // xhr.send(JSON.stringify({ id: buttonId, status: status }));
         }
 
-        fetch('../chatbot.html')
-            .then(response => response.text())
-            .then(data => {
-                // Update the chatbot div with the fetched content
-                document.getElementById('chatbot').innerHTML = data;
-            })
-            .catch(error => {
-                console.log('Error:', error);
-            });
+        const sliderThumb = document.getElementById("slider-thumb");
+        const sliderTrack = document.getElementById("slider-track");
+        const slider = document.querySelector(".slider");
+        const sliderValue = document.getElementById("slider-value");
+
+        sliderThumb.addEventListener("mousedown", startDrag);
+        sliderThumb.addEventListener("touchstart", startDrag);
+        slider.addEventListener("click", moveThumb);
+
+        function startDrag(event) {
+            event.preventDefault();
+
+            document.addEventListener("mousemove", drag);
+            document.addEventListener("touchmove", drag);
+            document.addEventListener("mouseup", stopDrag);
+            document.addEventListener("touchend", stopDrag);
+        }
+
+        function drag(event) {
+            const sliderRect = slider.getBoundingClientRect();
+            const sliderWidth = sliderRect.width;
+            const offsetX = event.clientX || event.touches[0].clientX;
+            const position = Math.max(0, Math.min(1, (offsetX - sliderRect.left) / sliderWidth));
+
+            const thumbPosition = position * 100;
+            sliderThumb.style.left = `${thumbPosition}%`;
+            sliderTrack.style.width = `${thumbPosition}%`;
+
+            const value = position.toFixed(2); // Get the value rounded to 2 decimal places
+            sliderValue.innerText = value; // Display the value
+        }
+
+        function stopDrag() {
+            document.removeEventListener("mousemove", drag);
+            document.removeEventListener("touchmove", drag);
+            document.removeEventListener("mouseup", stopDrag);
+            document.removeEventListener("touchend", stopDrag);
+        }
+
+        function moveThumb(event) {
+            const sliderRect = slider.getBoundingClientRect();
+            const sliderWidth = sliderRect.width;
+            const offsetX = event.clientX || event.touches[0].clientX;
+            const position = Math.max(0, Math.min(1, (offsetX - sliderRect.left) / sliderWidth));
+
+            const thumbPosition = position * 100;
+            sliderThumb.style.left = `${thumbPosition}%`;
+            sliderTrack.style.width = `${thumbPosition}%`;
+
+            const value = position.toFixed(2); // Get the value rounded to 2 decimal places
+            sliderValue.innerText = value; // Display the value
+        }
+
+        function selectAllRows(tableId) {
+            var checkboxes = document.querySelectorAll("#" + tableId + " input[type=checkbox]");
+            var selectAllCheckbox = document.getElementById(tableId + "-checkbox1");
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = selectAllCheckbox.checked;
+            }
+        }
+
+        function searchRows(tableId) {
+            var input = document.getElementById(tableId + "-searchInput");
+            var filter = input.value.toUpperCase();
+            var table = document.getElementById(tableId + "-data-table");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var dataCells = rows[i].getElementsByTagName("td");
+                var display = false;
+
+                for (var j = 0; j < dataCells.length; j++) {
+                    var cell = dataCells[j];
+                    if (cell) {
+                        var cellText = cell.innerText || cell.textContent;
+                        if (cellText.toUpperCase().indexOf(filter) > -1) {
+                            display = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = display ? "" : "none";
+            }
+        }
+
+        function clearSearch(tableId) {
+            var input = document.getElementById(tableId + "-searchInput");
+            input.value = "";
+            searchRows(tableId);
+        }
     </script>
 
     <script src="https://kit.fontawesome.com/bf8bc74aaf.js" crossorigin="anonymous"></script>
