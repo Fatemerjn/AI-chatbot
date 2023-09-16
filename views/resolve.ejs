@@ -24,13 +24,16 @@
         .step-circles {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            width: 100px;
+            align-items: flex-start;
+            /* Align step descriptions to the right */
+            width: 200px;
+            /* Adjust the width as needed */
             height: 400px;
             background-color: #f5f5f5;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            /* Add padding to create space between circles and descriptions */
         }
 
         .step-circle {
@@ -43,26 +46,32 @@
             background-color: #e0e0e0;
             font-weight: bold;
             color: #444;
+            margin-bottom: 10px;
+            /* Add margin between circles */
         }
 
-        .step-circle.active {
+        .step-circle.complete {
             background-color: black;
             color: white;
         }
 
-        .step-circle.active span {
+        .step-circle.complete span {
             display: none;
+        }
+
+        .step-circle.complete::after {
+            content: "\2713";
+            font-size: 24px;
+        }
+
+        .step-circle.active {
+            border: 2px solid #444;
         }
 
         .line {
             width: 4px;
             flex: 1;
             background-color: #e0e0e0;
-        }
-
-        .step-circle.active::after {
-            content: "\2713";
-            font-size: 24px;
         }
 
         .right-section {
@@ -602,21 +611,31 @@
             padding: 8px;
             text-align: left;
         }
+
+        .step-description {
+            font-size: 12px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 
 <body>
     <div class="page-container">
         <div class="left-section">
-            <h2>Steps:</h2>
             <div class="step-circles" id="stepList">
-                <div class="step-circle active" onclick="goToStep(1)">
-                    <span>1</span>
+                <div style="display: flex;">
+                    <div class="step-circle active" onclick="goToStep(1)">
+                        <span>1</span>
+                    </div>
+                    <div class="step-description">Step 1<br /> Create your first document</div>
                 </div>
                 <div class="line"></div>
-                <div class="step-circle" onclick="goToStep(2)"><span>2</span></div>
-                <div class="line"></div>
-                <div class="step-circle" onclick="goToStep(3)"><span>3</span></div>
+                <div style="display: flex;">
+                    <div class="step-circle" onclick="goToStep(2)">
+                        <span>2</span>
+                    </div>
+                    <div class="step-description">Step 2<br />Create your chatbot</div>
+                </div>
             </div>
         </div>
         <div class="right-section">
@@ -657,7 +676,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                 <nav>
                     <p>chatbot</p>
                     <button class="share-button">share</button>
-                    <button class="continue-button" onclick="nextStep()">continue</button>
+                    <button class="continue-button" onclick="nextStep()">Finish onboarding</button>
                 </nav>
 
                 <div class="step2-container">
@@ -993,9 +1012,10 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <div class="preview" id="chatstyle-preview">
                                         <img src="../public/stream-style.gif" alt="chat-response" width="300"
                                             height="300">
+                                            <p>test</p>
                                     </div>
                                     <div class="preview" id="chatgptstyle-preview">
-
+<p>test fkdhf</p>
                                     </div>
                                 </div>
                                 <div class="glass-effect">
@@ -1009,10 +1029,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <p>Detailed answers are more detailed and longer. They may also include additional
                                         useful context.</p>
 
-                                </div>
-                                <div class="detail" id="chatgptstyle-preview">
-
-                                </div>
+                                </div>]
                                 <div class="glass-effect">
                                     <div class="title">Creativiity</div>
                                     <div class="subtitle">By adjusting this property you change the amount of creativity
@@ -1027,9 +1044,6 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         conservative and predictable responses. This typically results in responses that
                                         are highly coherent and closely related to the input request, but may also be
                                         less creative and somewhat repetitive.</p>
-
-                                </div>
-                                <div class="detail" id="chatgptstyle-preview">
 
                                 </div>
                             </div>
@@ -1051,12 +1065,12 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                                 <div style="display: contents; margin-left: 20px;">
                                                     <input type="text" id="table1-searchInput" placeholder="Search"
                                                         oninput="searchRows('table1')" style="border: none;">
-                                                    <button onclick="clearSearch('table1')"
-                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
-                                                            class="fas fa-times"></i></button>
                                                     <button onclick="searchRows('table1')"
                                                         style="float: right; border: none; background-color: white; margin-inline: 20px;">Refresh
                                                         list</button>
+                                                    <button onclick="clearSearch('table1')"
+                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
+                                                            class="fas fa-times"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1064,6 +1078,11 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                             <td>
                                                 <input type="checkbox" id="table1-checkbox2">
                                                 <label for="table1-checkbox2">About test</label>
+                                                <a href="https://example.com" style="float: right;">
+                                                    <span class="attachment-icon">
+                                                        <i class="fas fa-external-link-alt"></i>
+                                                    </span>
+                                                </a>
                                             </td>
                                         </tr>
                                     </table>
@@ -1087,29 +1106,28 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                                 <div style="display: contents; margin-left: 20px;">
                                                     <input type="text" id="table2-searchInput" placeholder="Search"
                                                         oninput="searchRows('table2')" style="border: none;">
-                                                    <button onclick="clearSearch('table2')"
-                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
-                                                            class="fas fa-times"></i></button>
                                                     <button onclick="searchRows('table2')"
                                                         style="float: right; border: none; background-color: white; margin-inline: 20px;">Refresh
                                                         list</button>
+                                                    <button onclick="clearSearch('table2')"
+                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
+                                                            class="fas fa-times"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td style="display: grid;">
-                                                <label style="text-align: center; color: #585858;">Looks like you don't have any data sources yet</label>
-                                                <button style="width: fit-content;" class="continue-button">Add new data source</button>
+                                                <label style="text-align: center; color: #585858;">Looks like you don't
+                                                    have any data sources yet</label>
+                                                <button style="width: fit-content; margin-left: 30%;"
+                                                    class="continue-button">Add new data
+                                                    source</button>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-
-                        <button onclick="nextStep()">Confirm</button>
-                        <button onclick="previousStep()">Previous</button>
                     </div>
                     <div class="step2" style="display: none;" id="chatbot">
                         <h2>Chatbot Area</h2>
@@ -1121,11 +1139,11 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                 </div>
 
             </div>
-            <div class="right-section-part" id="step3">
+            <!-- <div class="right-section-part" id="step3">
                 <h2>Step 3: Integrate and deploy your chatbot</h2>
                 <button onclick="nextStep()">Confirm</button>
                 <button onclick="previousStep()">Previous</button>
-            </div>
+            </div> -->
         </div>
 
 
@@ -1160,11 +1178,31 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
 
         function updateStepList() {
             stepCircles.forEach((circle, index) => {
-                if (index < currentStep) {
-                    circle.classList.add('active');
-                } else {
-                    circle.classList.remove('active');
+                if (currentStep == 1) {
+                    if (index == 0) {
+                        circle.classList.add('active');
+                        circle.classList.remove('complete');
+                    }
+                    else if (index == 1) {
+                        circle.classList.remove('active');
+                        circle.classList.remove('complete');
+                    }
                 }
+                else if (currentStep == 2) {
+                    if (index == 0) {
+                        circle.classList.add('complete');
+                        circle.classList.remove('active');
+                    }
+                    else if (index == 1) {
+                        circle.classList.add('active');
+                        circle.classList.remove('complete');
+                    }
+                }
+                // if (index < currentStep) {
+                //   circle.classList.add('complete');
+                // } else {
+                //   circle.classList.remove('active');
+                // }
             });
         }
 
