@@ -8,7 +8,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Bles</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
         .page-container {
             display: flex;
             color: inherit;
@@ -240,7 +250,7 @@
             border: none;
             width: 100%;
             height: 40px;
-            font-size: 14px;
+            font-size: 17px;
             cursor: pointer;
             z-index: 1;
         }
@@ -388,6 +398,8 @@
 
         .title {
             font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 21px;
         }
 
         .subtitle {
@@ -492,6 +504,21 @@
             border-radius: 50%;
             background-color: gray;
             margin-right: 10px;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-circle {
+            width: 40px;
+            height: 40px;
+            margin-top: 10px;
+            border-radius: 50%;
+            background-color: gray;
+            margin-left: 10px;
             border: 2px solid #fff;
             display: flex;
             align-items: center;
@@ -650,6 +677,133 @@
             font-size: 12px;
             margin-left: 10px;
         }
+
+        .chatbot {
+            margin-left: 20px;
+            right: 35px;
+            bottom: 90px;
+            width: 420px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.5);
+            transform-origin: bottom right;
+            box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+                0 32px 64px -48px rgba(0, 0, 0, 0.5);
+            transition: all 0.1s ease;
+        }
+
+        .show-chatbot .chatbot {
+            /* width: 100%;
+            height: 100%; */
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .chatbot header {
+            position: relative;
+            text-align: center;
+            color: #fff;
+            background-color: #807f7f;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbot header span {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            display: none;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+
+        header h2 {
+            font-size: 1.4rem;
+        }
+
+        .chatbot .chatbox {
+            overflow-y: auto;
+            height: 510px;
+        }
+
+        .chatbot :where(.chatbox, textarea)::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot :where(.chatbox, textarea)::-webkit-scrollbar-track {
+            background: #fff;
+            border-radius: 25px;
+        }
+
+        .chatbot :where(.chatbox, textarea)::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 25px;
+        }
+
+        .chatbox .chat {
+            display: flex;
+            list-style: none;
+        }
+
+        .chatbox .outgoing {
+            margin: 20px 0;
+            justify-content: flex-end;
+        }
+
+
+
+        .chatbox .chat p {
+            white-space: pre-wrap;
+            padding: 12px 16px;
+            border-radius: 10px 10px 0 10px;
+            max-width: 75%;
+            color: #fff;
+            font-size: 0.95rem;
+            background-color: #807f7f;
+        }
+
+        .chatbox .incoming p {
+            border-radius: 10px 10px 10px 0;
+        }
+
+        .chatbox .chat p.error {
+            color: #721c24;
+            background: #f8d7da;
+        }
+
+        .chatbox .incoming p {
+            color: #000;
+            background: #f2f2f2;
+        }
+
+        .chatbot .chat-input {
+            display: flex;
+            gap: 5px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #fff;
+            padding: 3px 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input textarea {
+            height: 55px;
+            width: 100%;
+            border: none;
+            outline: none;
+            resize: none;
+            max-height: 180px;
+            padding: 15px 15px 15px 0;
+            font-size: 0.95rem;
+        }
+
+        .chat-input textarea:valid~span {
+            visibility: visible;
+        }
     </style>
 </head>
 
@@ -782,7 +936,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                         </div>
                                         <div class="color-palette">
                                             <input type="color" id="color-picker" onchange="changeAvatarColor(event)">
-                                            <div class="icon-circle"></div>
+                                            <div class="icon-circle"> <i class="fas fa-comments"></i></div>
                                             <div class="chat-icon">
                                                 <i class="fas fa-comment"></i>
                                             </div>
@@ -798,12 +952,13 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                 <div class="glass-effect">
                                     <div class="title">Header</div>
                                     <div class="subtitle">Chatbot header text</div>
-                                    <input class="inpt" type="text" id="chatbot-header" />
+                                    <input class="inpt" type="text" id="chatbot-header" oninput="updateheader()">
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Subheader</div>
                                     <div class="subtitle">Chatbot header text</div>
-                                    <input class="inpt" type="text" id="chatbot-subheader" />
+                                    <input class="inpt" type="text" id="chatbot-subheader"
+                                        oninput="updatesubheader()" />
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Chatbot window size</div>
@@ -814,7 +969,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                     </div>
                                     <div class="input-container">
                                         <div class="label">Default width
-                                            <input type="number" class="glass-effect" value="360" style="width: 100px;">
+                                            <input type="number" class="glass-effect" value="360" style="width: 100px;" id="default-width" oninput="change_width()">
                                         </div>
                                         <select class="glass-effect" style="width: 100px;">
                                             <option value="px">px</option>
@@ -823,7 +978,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                         </select>
                                         <div class="label-hide">Expand width
                                             <input type="number" class="glass-effect-hide" value="360"
-                                                style="width: 100px;">
+                                                style="width: 100px;" id="expand-width">
                                         </div>
                                         <select class="glass-effect-hide" style="width: 100px;">
                                             <option value="px">px</option>
@@ -833,7 +988,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                     </div>
                                     <div class="input-container">
                                         <div class="label">Default height
-                                            <input type="number" class="glass-effect" value="640" style="width: 100px;">
+                                            <input type="number" class="glass-effect" value="640" style="width: 100px;" id="default-height" oninput="change_height()">
                                         </div>
                                         <select class="glass-effect" style="width: 100px;">
                                             <option value="px">px</option>
@@ -842,7 +997,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                         </select>
                                         <div class="label-hide">Expand height
                                             <input type="number" class="glass-effect-hide" value="640"
-                                                style="width: 100px;">
+                                                style="width: 100px;" id="expand-height">
                                         </div>
                                         <select class="glass-effect-hide" style="width: 100px;">
                                             <option value="px">px</option>
@@ -1046,7 +1201,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <div class="preview" id="chatstyle-preview">
                                         <img src="../public/stream-style.gif" alt="chat-response" width="300"
                                             height="300">
-                                            
+
                                     </div>
                                     <div class="preview" id="chatgptstyle-preview">
                                     </div>
@@ -1066,12 +1221,13 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                         <p></p>
                                     </div>
                                     <div class="answer" id="detailed-answer">
-                                        <p>Detailed answers are more detailed and longer. They may also include additional
+                                        <p>Detailed answers are more detailed and longer. They may also include
+                                            additional
                                             useful context.</p>
                                     </div>
-                                    
 
-                                </div>]
+
+                                </div>
                                 <div class="glass-effect">
                                     <div class="title">Creativiity</div>
                                     <div class="subtitle">By adjusting this property you change the amount of creativity
@@ -1084,8 +1240,10 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     </div>
                                     <div class="creativity" id="very-low">
                                         <p>This is the lowest possible creativity setting, which produces the most
-                                            conservative and predictable responses. This typically results in responses that
-                                            are highly coherent and closely related to the input request, but may also be
+                                            conservative and predictable responses. This typically results in responses
+                                            that
+                                            are highly coherent and closely related to the input request, but may also
+                                            be
                                             less creative and somewhat repetitive.</p>
                                     </div>
                                     <div class="creativity" id="low">
@@ -1182,12 +1340,41 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                         </div>
                     </div>
                     <div class="step2" style="display: none;" id="chatbot">
-                        <h2>Chatbot Area</h2>
-                        <div id="targetDiv"></div>
+                        <div class="show-chatbot">
+                            <div class="chatbot">
+                                <header style="display: flex;">
+                                    <div class="profile-circle"><i style="font-size: xx-large;" class="fas fa-bolt"></i>
+                                    </div>
+                                    <div style="
+                                    text-align: left;
+                                    margin-left: 22px;
+                                    margin-top: -7px;
+                                ">
+                                        <p style="margin-bottom: -18px; font-weight: 630;" id="chatbot-header-out">AI
+                                            Assistant</p>
+                                        <p style="font-weight: 100;" id="chatbot-subheader-out">Ask me anything</p>
+                                    </div>
+                                    <div><i style="margin: 30px 0 0 100px;" class="fa fa-ellipsis-vertical"></i></div>
+                                    <div><i style="margin: 28px 0 0 25px;"
+                                            class="fa-solid fa-up-right-and-down-left-from-center" id="expand-icon"
+                                            onclick="expand()"></i></div>
+                                            <div><i class="fa-solid fa-xmark" style="margin: 30px 0 0 23px" onclick="close()"></i></div>
+                                </header>
+                                <ul class="chatbox">
+                                    <li class="chat incoming">
+                                        <p>Hi there 👋<br>How can I help you today?</p>
+                                    </li>
+                                </ul>
+                                <div class="chat-input">
+                                    <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+                                    <span id="send-btn" class="material-symbols-rounded">send</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="step2" style="display: none;" id="ai-agent">
+                    <!-- <div class="step2" style="display: none;" id="ai-agent">
                         <h2>AI agent Area</h2>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
@@ -1201,14 +1388,13 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
 
     </div>
 
+
     <script>
         let currentStep = 1;
         const stepCircles = document.querySelectorAll('.step-circle');
         const stepList = document.getElementById('stepList');
         var prebox;
 
-        document.getElementById("chatbot-header").value = "AI Assistant";
-        document.getElementById("chatbot-subheader").value = "Ask me anything";
         document.getElementById("live-agent-req").value = "wants to talk to a human";
         document.getElementById("persona-name").value = "Bot";
         function toggleContent(boxId) {
@@ -1294,14 +1480,15 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
         updateStepList();
 
         function showDetail(detailId) {
-            if (detailId == "chatbot") {
-                document.getElementById(detailId).style.display = "block";
-                document.getElementById("ai-agent").style.display = "none";
+            // if (detailId == "chatbot") {
+            //     document.getElementById(detailId).style.display = "block";
+            //     document.getElementById("ai-agent").style.display = "none";
 
-            } else {
-                document.getElementById(detailId).style.display = "block";
-                document.getElementById("chatbot").style.display = "none";
-            }
+            // } else {
+            //     document.getElementById(detailId).style.display = "block";
+            //     document.getElementById("chatbot").style.display = "none";
+            // }
+            document.getElementById("chatbot").style.display = "block";
             var details = document.getElementsByClassName("detail");
             for (var i = 0; i < details.length; i++) {
                 details[i].classList.remove("open");
@@ -1341,6 +1528,8 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             preview.classList.add("open");
         }
 
+        var profileCircle = document.querySelector(".profile-circle");
+        var iconprofileCircle = document.querySelector(".profile-circle i");
         function handleImageUpload(event) {
             var file = event.target.files[0];
             var reader = new FileReader();
@@ -1348,20 +1537,25 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
 
             reader.onload = function (e) {
                 avatarPreview.style.backgroundImage = `url(${e.target.result})`;
+                profileCircle.style.backgroundImage = `url(${e.target.result})`;
+                iconprofileCircle.style.display = 'none';
             };
 
             reader.readAsDataURL(file);
         }
 
+
+        var colorCircle = document.querySelector(".icon-circle");
+        var iconcolorcircle = document.querySelector(".icon-circle i");
         function handleIconUpload(event) {
             var file = event.target.files[0];
             var reader = new FileReader();
             var avatarPreview = document.querySelector(".icon-preview");
-            var colorCircle = document.querySelector(".icon-circle");
 
             reader.onload = function (e) {
                 avatarPreview.style.backgroundImage = `url(${e.target.result})`;
                 colorCircle.style.backgroundImage = `url(${e.target.result})`;
+                iconcolorcircle.style.display = 'none';
             };
 
             reader.readAsDataURL(file);
@@ -1371,19 +1565,25 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             var avatarPreview = document.querySelector(".avatar-preview");
             avatarPreview.style.backgroundImage = "";
             document.getElementById("image-upload").value = "";
+            profileCircle.style.backgroundImage = "";
+            iconprofileCircle.style.display = 'block';
         }
 
         function resetIcon() {
             var avatarPreview = document.querySelector(".icon-preview");
             avatarPreview.style.backgroundImage = "";
             document.getElementById("icon-upload").value = "";
-            document.getElementById("chat-icon").value = "";
+            colorCircle.style.backgroundImage = "";
+            iconcolorcircle.style.display = 'block';
         }
 
         function changeAvatarColor(event) {
             var color = event.target.value;
-            var colorCircle = document.querySelector(".icon-circle");
             colorCircle.style.backgroundColor = color;
+            var colorheader = document.querySelector(".chatbot header");
+            colorheader.style.background = color;
+            var chatcolor = document.querySelector(".chatbox .outgoing p");
+            chatcolor.style.background = color;
         }
 
         function hideExpand() {
@@ -1394,6 +1594,11 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             var hidd = document.getElementsByClassName("label-hide");
             for (var i = 0; i < hidd.length; i++) {
                 hidd[i].classList.toggle("hidden");
+            }
+            if (icon.style.display === "none") {
+                icon.style.display = "block";
+            } else {
+                icon.style.display = "none";
             }
         }
 
@@ -1505,6 +1710,125 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             var input = document.getElementById(tableId + "-searchInput");
             input.value = "";
             searchRows(tableId);
+        }
+
+        /////////////////////////////////////
+        const chatbox = document.querySelector(".chatbox");
+        const chatInput = document.querySelector(".chat-input textarea");
+        const sendChatBtn = document.querySelector(".chat-input span");
+
+        let userMessage = null; // Variable to store user's message
+        const API_KEY = "PASTE-YOUR-API-KEY"; // Paste your API key here
+        const inputInitHeight = chatInput.scrollHeight;
+
+        const createChatLi = (message, className) => {
+            // Create a chat <li> element with passed message and className
+            const chatLi = document.createElement("li");
+            chatLi.classList.add("chat", `${className}`);
+            let chatContent = className === "outgoing" ? `<p></p>` : `<p></p>`;
+            chatLi.innerHTML = chatContent;
+            chatLi.querySelector("p").textContent = message;
+            return chatLi; // return chat <li> element
+        }
+
+        const generateResponse = (chatElement) => {
+            const API_URL = "https://api.openai.com/v1/chat/completions";
+            const messageElement = chatElement.querySelector("p");
+
+            // Define the properties and message for the API request
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: userMessage }],
+                })
+            }
+
+            // Send POST request to API, get response and set the reponse as paragraph text
+            fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
+                messageElement.textContent = data.choices[0].message.content.trim();
+            }).catch(() => {
+                messageElement.classList.add("error");
+                messageElement.textContent = "Oops! Something went wrong. Please try again.";
+            }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+        }
+
+        const handleChat = () => {
+            userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
+            if (!userMessage) return;
+
+            // Clear the input textarea and set its height to default
+            chatInput.value = "";
+            chatInput.style.height = `${inputInitHeight}px`;
+
+            // Append the user's message to the chatbox
+            chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+            chatbox.scrollTo(0, chatbox.scrollHeight);
+
+            setTimeout(() => {
+                // Display "Thinking..." message while waiting for the response
+                const incomingChatLi = createChatLi("Thinking...", "incoming");
+                chatbox.appendChild(incomingChatLi);
+                chatbox.scrollTo(0, chatbox.scrollHeight);
+                generateResponse(incomingChatLi);
+            }, 600);
+        }
+
+        chatInput.addEventListener("input", () => {
+            // Adjust the height of the input textarea based on its content
+            chatInput.style.height = `${inputInitHeight}px`;
+            chatInput.style.height = `${chatInput.scrollHeight}px`;
+        });
+
+        chatInput.addEventListener("keydown", (e) => {
+            // If Enter key is pressed without Shift key and the window 
+            // width is greater than 800px, handle the chat
+            if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                e.preventDefault();
+                handleChat();
+            }
+        });
+
+        document.getElementById("chatbot-header").value = "AI Assistant";
+        function updateheader() {
+            var inputText = document.getElementById("chatbot-header").value;
+            var outputParagraph = document.getElementById("chatbot-header-out");
+            outputParagraph.textContent = inputText;
+        }
+
+        document.getElementById("chatbot-subheader").value = "Ask me anything";
+        function updatesubheader() {
+            var inputText = document.getElementById("chatbot-subheader").value;
+            var outputParagraph = document.getElementById("chatbot-subheader-out");
+            outputParagraph.textContent = inputText;
+        }
+
+        var icon = document.getElementById("expand-icon");
+        function expand() {
+            if (icon.classList.contains("fa-up-right-and-down-left-from-center")) {
+                icon.classList.remove("fa-solid", "fa-up-right-and-down-left-from-center");
+                icon.classList.add("fa-solid", "fa-down-left-and-up-right-to-center");
+            } else {
+                icon.classList.remove("fa-solid", "fa-down-left-and-up-right-to-center");
+                icon.classList.add("fa-solid", "fa-up-right-and-down-left-from-center");
+            }
+        }
+
+        function change_height() {
+            var inputwidth = document.getElementById("default-width").value;
+            document.querySelector(".show-chatbot .chatbot").style.width = `${inputwidth}px`;
+        }
+
+        function change_height() {
+
+        }
+
+        function close() {
+            document.getElementById(detailId).style.display = "block";
         }
     </script>
 
