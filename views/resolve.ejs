@@ -865,7 +865,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                 <nav>
                     <p>chatbot</p>
                     <button class="share-button">share</button>
-                    <button class="continue-button" onclick="nextStep()">Finish onboarding</button>
+                    <button id="submitButton" class="continue-button" onclick="nextStep()">Finish onboarding</button>
                 </nav>
 
                 <div class="step2-container">
@@ -973,7 +973,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                             <input type="number" class="glass-effect" value="360" style="width: 100px;"
                                                 id="default-width" oninput="change_width()">
                                         </div>
-                                        <select class="glass-effect" style="width: 100px;">
+                                        <select id="unit-selector-dfw" class="glass-effect" style="width: 100px;">
                                             <option value="px">px</option>
                                             <option value="vm">vm</option>
                                             <option value="%">%</option>
@@ -982,7 +982,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                             <input type="number" class="glass-effect-hide" value="360"
                                                 style="width: 100px;" id="expand-width">
                                         </div>
-                                        <select class="glass-effect-hide" style="width: 100px;">
+                                        <select id="unit-selector-exw" class="glass-effect-hide" style="width: 100px;">
                                             <option value="px">px</option>
                                             <option value="vm">vm</option>
                                             <option value="%">%</option>
@@ -993,7 +993,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                             <input type="number" class="glass-effect" value="640" style="width: 100px;"
                                                 id="default-height" oninput="change_height()">
                                         </div>
-                                        <select class="glass-effect" style="width: 100px;">
+                                        <select id="unit-selector-dfh" class="glass-effect" style="width: 100px;">
                                             <option value="px">px</option>
                                             <option value="vm">vm</option>
                                             <option value="%">%</option>
@@ -1002,7 +1002,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                             <input type="number" class="glass-effect-hide" value="640"
                                                 style="width: 100px;" id="expand-height">
                                         </div>
-                                        <select class="glass-effect-hide" style="width: 100px;">
+                                        <select id="unit-selector-exh" class="glass-effect-hide" style="width: 100px;">
                                             <option value="px">px</option>
                                             <option value="vm">vm</option>
                                             <option value="%">%</option>
@@ -1020,13 +1020,13 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                     <div class="title">Notification email</div>
                                     <div class="subtitle">Live agent requests and chat transcripts will be sent to this
                                         email</div>
-                                    <input type="email" class="inpt" placeholder="support@example.com">
+                                    <input id="email" type="email" class="inpt" placeholder="support@example.com">
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Live agent requests</div>
                                     <div class="subtitle">Send notification to your Email when client requests Live
                                         Agent</div>
-                                    <div class="toggle-button" onclick="toggleStatus(this);"></div>
+                                    <div id="send-notif" class="toggle-button" onclick="toggleStatus(this);"></div>
                                     <div class="subtitle">Scenarios when live agent should be notified</div>
                                     <input type="text" class="inpt bb-bt" id="live-agent-req">
                                 </div>
@@ -1035,7 +1035,7 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                     <div class="flex-container">
                                         <div class="subtitle">Send chat transcripts to your notification email once they
                                             are finished</div>
-                                        <div class="toggle-button on" onclick="toggleStatus(this);"></div>
+                                        <div id="send-transcripts" class="toggle-button on" onclick="toggleStatus(this);"></div>
                                     </div>
                                 </div>
                                 <div class="glass-effect">
@@ -1043,14 +1043,14 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                     <div class="flex-container">
                                         <div class="subtitle">Add short summary of the conversation to the transcript
                                         </div>
-                                        <div class="toggle-button on" onclick="toggleStatus(this);"></div>
+                                        <div id="show-summary" class="toggle-button on" onclick="toggleStatus(this);"></div>
                                     </div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Include Unresolved Requests</div>
                                     <div class="flex-container">
                                         <div class="subtitle">Add Unresolved requests to the transcript</div>
-                                        <div class="toggle-button on" onclick="toggleStatus(this);"></div>
+                                        <div id="unresolved-req" class="toggle-button on" onclick="toggleStatus(this);"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1061,12 +1061,12 @@ Sunday: [insert Sunday hours, e.g., Closed]</textarea>
                                 <div class="glass-effect">
                                     <div class="title">Require name and email before chat</div>
                                     <div class="subtitle">Always ask for name and email before chat</div>
-                                    <div class="toggle-button" onclick="toggleStatus(this);"></div>
+                                    <div id="ask-name" class="toggle-button" onclick="toggleStatus(this);"></div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Collect feedback</div>
                                     <div class="subtitle">Ask for feedback after chat is finished</div>
-                                    <div class="toggle-button on" onclick="toggleStatus(this);"></div>
+                                    <div id="ask-feedback" class="toggle-button on" onclick="toggleStatus(this);"></div>
                                 </div>
                                 <div class="glass-effect">
                                     <div class="title">Welcome message(s)</div>
@@ -1213,9 +1213,9 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <div class="title">Answer style</div>
                                     <div class="subtitle">Choose between short, balanced or detailed answers</div>
                                     <div class="buttons">
-                                        <button onclick="showAnswer('short-answer')">Short</button>
-                                        <button onclick="showAnswer('balanced-answer')">Balanced</button>
-                                        <button onclick="showAnswer('detailed-answer')">Detailed</button>
+                                        <button id="show-short-answer" onclick="showAnswer('short-answer')">Short</button>
+                                        <button id="show-balanced-answer" onclick="showAnswer('balanced-answer')">Balanced</button>
+                                        <button id="show-detailed-answer" onclick="showAnswer('detailed-answer')">Detailed</button>
                                     </div>
                                     <div class="answer" id="short-answer">
                                         <p></p>
@@ -1235,10 +1235,10 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
                                     <div class="subtitle">By adjusting this property you change the amount of creativity
                                         in the answer. The higher the value the more creative the answer will be.</div>
                                     <div class="buttons">
-                                        <button onclick="showCreativity('very-low')">Very Low</button>
-                                        <button onclick="showCreativity('low')">Low</button>
-                                        <button onclick="showCreativity('medium')">Medium</button>
-                                        <button onclick="showCreativity('high')">High</button>
+                                        <button id="cre-very-low" onclick="showCreativity('very-low')">Very Low</button>
+                                        <button id="cre-low" onclick="showCreativity('low')">Low</button>
+                                        <button id="cre-medium" onclick="showCreativity('medium')">Medium</button>
+                                        <button id="cre-high" onclick="showCreativity('high')">High</button>
                                     </div>
                                     <div class="creativity" id="very-low">
                                         <p>This is the lowest possible creativity setting, which produces the most
@@ -1824,7 +1824,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             } else {
                 icon.classList.remove("fa-solid", "fa-down-left-and-up-right-to-center");
                 icon.classList.add("fa-solid", "fa-up-right-and-down-left-from-center");
-                
+
                 var inputwidth = document.getElementById("default-width").value;
                 document.querySelector(".show-chatbot .chatbot").style.width = `${inputwidth}px`;
 
@@ -1851,12 +1851,210 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             }
         }
 
-        var about_test = document.getElementById('first-step-about').value;
-        var nameInput = document.getElementById('nameInput').value;
-        var chatbot_button = document.getElementById('chatbot_button');
-        var ai_agent_button = document.getElementById('ai-agent-button');
-        var about_test = document.getElementById('').value;
-        var about_test = document.getElementById('').value;
+
+        // Assuming you have jQuery library included in your project
+
+        // Event listener for submit button click
+        $('#submit-button').click(function (e) {
+            e.preventDefault();
+
+            var about_test = $('#first-step-about').val();
+            var nameInput = $('#nameInput').val();
+            var chatbot_button = $('#chatbot-button');
+            var ai_agent_button = $('#ai-agent-button');
+            var chatbotType = null;
+            chatbot_button.on('click', function () {
+                chatbotType = chatbot_button;
+            });
+            ai_agent_button.on('click', function () {
+                chatbotType = ai_agent_button;
+            });
+
+            var avatarPicture = $('#image-upload');
+            var avatar = null;
+            avatarPicture.on('change', function (event) {
+                avatar = event.target.files[0];
+            });
+
+            var iconPicture = $('#icon-upload');
+            var iconpic = null;
+            iconPicture.on('change', function (event) {
+                iconpic = event.target.files[0];
+            });
+
+            var color = $('#color-picker').val();
+            var header = $('#chatbot-header').val();
+            var subheader = $('#chatbot-subheader').val();
+
+            var unit_select_dfw = $('#unit-selector-dfw').val();
+            var unit_select_exw = $('#unit-selector-exw').val();
+            var unit_select_dfh = $('#unit-selector-dfh').val();
+            var unit_select_exh = $('#unit-selector-exh').val();
+
+            var default_width = $('#default-width').val() + unit_select_dfw;
+            var expand_width = $('#expand-width').val() + unit_select_exw;
+            var default_height = $('#default-height').val() + unit_select_dfh;
+            var expand_height = $('#expand-height').val() + unit_select_exh;
+            var width = null;
+            var height = null;
+            if (icon.style.display === "none"  || icon.classList.contains("fa-up-right-and-down-left-from-center")) {
+                width = default_width;
+                height = default_height;
+            }
+            else {
+                width = expand_width;
+                height = expand_height;
+            }
+
+            var email = $('#email').val();
+            var send_notif = null;
+            if(document.getElementById('send-notif').classList('toggle-button on')){
+                send_notif = true;
+            }
+            else {
+                send_notif = false;
+            }
+            var live_agent_req = $('#live-agent-req').val();
+
+            var send_transcripts = null;
+            if(document.getElementById('send-transcripts').classList('toggle-button on')){
+                send_transcripts = true;
+            }
+            else {
+                send_transcripts = false;
+            }
+
+            var summary = null;
+            if(document.getElementById('show-summary').classList('toggle-button on')){
+                summary = true;
+            }
+            else {
+                summary = false;
+            }
+
+            var unresolved_req = null;
+            if(document.getElementById('unresolved-req').classList('toggle-button on')){
+                unresolved_req = true;
+            }
+            else {
+                unresolved_req = false;
+            }
+
+            var ask_name = null;
+            if(document.getElementById('ask-name').classList('toggle-button on')){
+                ask_name = true;
+            }
+            else {
+                ask_name = false;
+            }
+
+            var ask_feedback = null;
+            if(document.getElementById('ask-feedback').classList('toggle-button on')){
+                ask_feedback = true;
+            }
+            else {
+                ask_feedback = false;
+            }
+
+            var welcomeMessages = $('#welcomeMessages').val();
+            var popupMessages = $('#popupMessages').val();
+            var conversationStarters = $('#conversationStarters').val();
+            var fallbackResponse = $('#fallbackResponse').val();
+            var liveAgentAcknowledgeMessage = $('#liveAgentAcknowledgeMessage').val();
+            var liveAgentWaitMessage = $('#liveAgentWaitMessage').val();
+            var liveAgentLeftMessage = $('#liveAgentLeftMessage').val();
+            var company_name = $('#company-name').val();
+            var business_website = $('#business-website').val();
+            var persona_name = $('#persona-name').val();
+            var customPrompt = $('#customPrompt').val();
+            var temperature = $('#slider-value').text();
+
+            var short_answer= $('#show-short-answer');
+            var balanced_answer = $('#show-balanced-answer');
+            var detailed_answer = $('#show-detailed-answer');
+            var Creativity = null;
+            short_answer.on('click', function () {
+                response_style = short_answer;
+            });
+            balanced_answer.on('click', function () {
+                response_style = balanced_answer;
+            });
+            detailed_answer.on('click', function () {
+                response_style = detailed_answer;
+            });
+
+
+            var cre_very_low = $('#cre-very-low');
+            var cre_low = $('#cre-low');
+            var cre_medium = $('#cre-medium');
+            var cre_high = $('#cre-high');
+            var Creativity = null;
+            cre_very_low.on('click', function () {
+                Creativity = cre_very_low;
+            });
+            cre_low.on('click', function () {
+                Creativity = cre_low;
+            });
+            cre_medium.on('click', function () {
+                Creativity = cre_medium;
+            });
+            cre_high.on('click', function () {
+                Creativity = cre_high;
+            });
+
+            // Create a form data object
+            var formData = new FormData();
+            formData.append("About-Test", about_test);
+            formData.append("Name", nameInput);
+            formData.append("Chatbot-Type", chatbotType);
+            formData.append("Avatar", avatar);
+            formData.append("Icon", iconpic);
+            formData.append("Color", color);
+            formData.append("Header", header);
+            formData.append("Subheader", subheader);
+            formData.append("Width", width);
+            formData.append("Height", height);
+            formData.append("Email", email);
+            formData.append("Send-Notification", JSON.stringify(send_notif));
+            formData.append("Live-Agent-Request", live_agent_req);
+            formData.append("Send-Transcripts", JSON.stringify(send_transcripts));
+            formData.append("Summary", JSON.stringify(summary));
+            formData.append("Unsolved-Request", JSON.stringify(unresolved_req));
+            formData.append("Ask-name", JSON.stringify(ask_name));
+            formData.append("Ask-feedback", JSON.stringify(ask_feedback));
+            formData.append("WelcomeMessages", welcomeMessages);
+            formData.append("PopupMessages", popupMessages);
+            formData.append("ConversationStarters", conversationStarters);
+            formData.append("FallbackResponse", fallbackResponse);
+            formData.append("LiveAgentAcknowledgeMessage", liveAgentAcknowledgeMessage);
+            formData.append("LiveAgentWaitMessage", liveAgentWaitMessage);
+            formData.append("LiveAgentLeftMessage", liveAgentLeftMessage);
+            formData.append("Company-Name", company_name);
+            formData.append("Business-Website", business_website);
+            formData.append("Persona-Name", persona_name);
+            formData.append("CustomPrompt", customPrompt);
+            formData.append("Temperature", JSON.stringify(temperature));
+            formData.append("LiveAgentLeftMessage", liveAgentLeftMessage);
+
+
+            // Send the form data to the backend using AJAX
+            $.ajax({
+                url: "backend-url", // Replace with your backend endpoint URL
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // Handle the response from the backend
+                    console.log("Data sent successfully");
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error("Error:", error);
+                }
+            });
+        });
+
     </script>
 
     <script src="https://kit.fontawesome.com/bf8bc74aaf.js" crossorigin="anonymous"></script>
