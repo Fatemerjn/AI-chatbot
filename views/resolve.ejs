@@ -1972,7 +1972,7 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             var short_answer= $('#show-short-answer');
             var balanced_answer = $('#show-balanced-answer');
             var detailed_answer = $('#show-detailed-answer');
-            var Creativity = null;
+            var response_style = null;
             short_answer.on('click', function () {
                 response_style = short_answer;
             });
@@ -2034,7 +2034,8 @@ How can I create chatbot??" name="conversationStarters" id="conversationStarters
             formData.append("Persona-Name", persona_name);
             formData.append("CustomPrompt", customPrompt);
             formData.append("Temperature", JSON.stringify(temperature));
-            formData.append("LiveAgentLeftMessage", liveAgentLeftMessage);
+            formData.append("Response-Style", response_style);
+            formData.append("Creativity", creativity);
 
 
             // Send the form data to the backend using AJAX
