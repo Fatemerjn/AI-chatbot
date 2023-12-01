@@ -1,840 +1,853 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Bles</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link href='https://fonts.googleapis.com/css?family=Saira' rel='stylesheet'>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Saira"
+      rel="stylesheet"
+    />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
-        * {
-            font-family: 'saira';
-        }
-
-        .page-container {
-            display: flex;
-            color: inherit;
-            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-        }
-
-        .left-section {
-            flex-basis: 15%;
-            background-color: #f1f1f1;
-            padding: 20px;
-        }
-
-        .step-circles {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            /* Align step descriptions to the right */
-            width: 200px;
-            /* Adjust the width as needed */
-            height: 400px;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            /* Add padding to create space between circles and descriptions */
-        }
-
-        .step-circle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #e0e0e0;
-            font-weight: bold;
-            color: #444;
-            margin-bottom: 10px;
-            /* Add margin between circles */
-        }
-
-        .step-circle.complete {
-            background-color: black;
-            color: white;
-        }
-
-        .step-circle.complete span {
-            display: none;
-        }
-
-        .step-circle.complete::after {
-            content: "\2713";
-            font-size: 24px;
-        }
-
-        .step-circle.active {
-            border: 2px solid #444;
-        }
-
-        .line {
-            width: 4px;
-            flex: 1;
-            background-color: #e0e0e0;
-        }
-
-        .right-section {
-            flex-basis: 85%;
-            overflow-y: scroll;
-            background-image: ("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cbcbcb' fill-opacity='0.21'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-
-        }
-
-        .right-section-part {
-            display: none;
-            padding-left: 20px;
-        }
-
-        .right-section-part.active {
-            display: block;
-        }
-
-        .right-section-part button.show-indicator::after {
-            content: "";
-            margin-left: 5px;
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: red;
-            border-radius: 50%;
-        }
-
-        .right-section-part #chatbotTypes {
-            display: none;
-            margin-top: 10px;
-            padding-left: 20px;
-            border-left: 2px solid red;
-        }
-
-        .right-section-part nav {
-            display: flex;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-        }
-
-        nav p {
-            margin-right: auto;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        nav button {
-            background-color: #fff;
-            border: 2px solid black;
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 10px 15px;
-            margin-left: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-
-
-        nav button:hover {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .continue-button {
-            background-color: #fff;
-            border: 2px solid black;
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 10px 15px;
-            margin-left: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            background-color: black;
-            color: #fff;
-        }
-
-        .step2 {
-            flex-basis: 50%;
-        }
-
-        .step.active {
-            display: block;
-        }
-
-        .step2-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .step2-container.active {
-            display: block;
-        }
-
-        .glass-effect {
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            font-family: "Arial", sans-serif;
-            max-width: 95%;
-        }
-
-        .glass-effect-hide {
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            font-family: "Arial", sans-serif;
-            max-width: 95%;
-        }
-
-        .inpt[type="email"],
-        .inpt[type="text"] {
-            border: 0.5px solid rgb(185, 183, 183);
-            width: 98%;
-            height: 25px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            padding: 5px;
-            transition: border-color 0.3s ease;
-            color: rgb(185, 183, 183);
-        }
-
-        .inpt[type="email"].bb-bt,
-        .inpt[type="text"].bb-bt {
-            border: 0.5px solid rgb(58, 58, 58);
-            color: #000000;
-            height: 50px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-
-        .inpt[type="email"]:focus,
-        .inpt[type="text"]:focus {
-            border-color: rgb(117, 169, 248);
-        }
-
-        .box {
-            flex: 1 1 100%;
-            position: relative;
-            height: fit-content;
-            font-family: "Arial", sans-serif;
-            background-color: transparent;
-            transition: background-color 0.3s ease;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .button {
-            text-align: left;
-            position: relative;
-            background-color: #fff;
-            border: none;
-            width: 100%;
-            height: 40px;
-            font-size: 17px;
-            cursor: pointer;
-            z-index: 1;
-        }
-
-        .button::before {
-            content: "\f077";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            display: inline-block;
-            margin-right: 10px;
-            transform: rotate(180deg);
-            transition: transform 0.3s ease;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-
-        }
-
-        .button.rotate::before {
-            transform: rotate(0deg);
-        }
-
-        .content {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .box.open .content {
-            display: block;
-        }
-
-        .box.open {
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .header {
-            margin-bottom: 10px;
-        }
-
-        .header h2 {
-            font-weight: bold;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            background-color: gray;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .buttons button {
-            width: 50%;
-            padding: 10px;
-            margin: 2px;
-            border: none;
-            color: white;
-            font-weight: bold;
-            background-color: transparent;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .buttons button:hover {
-            background-color: white;
-            color: gray;
-        }
-
-        .detail {
-            display: none;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            font-family: "Arial", sans-serif;
-            max-width: 95%;
-        }
-
-        .detail.open {
-            display: block;
-        }
-
-        .preview {
-            display: none;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            font-family: "Arial", sans-serif;
-            max-width: 95%;
-        }
-
-        .preview.open {
-            display: block;
-        }
-
-        .answer {
-            display: none;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            font-family: "Arial", sans-serif;
-            max-width: 95%;
-        }
-
-        .answer.open {
-            display: block;
-        }
-
-        .creativity {
-            display: none;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            font-family: "Arial", sans-serif;
-            max-width: 95%;
-        }
-
-        .creativity.open {
-            display: block;
-        }
-
-        .avatar-box {
-            width: 300px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .title {
-            font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 21px;
-        }
-
-        .subtitle {
-            font-weight: lighter;
-            margin-bottom: 10px;
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            margin-bottom: 20px;
-            display: flex;
-        }
-
-        .avatar-circle {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-            background-color: gray;
-            border-radius: 50%;
-            display: flex;
-            margin-left: 0;
-            overflow: hidden;
-        }
-
-        .avatar-preview {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .icon-preview {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .upload-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-        }
-
-        .avatar-circle:hover .upload-overlay {
-            opacity: 1;
-        }
-
-        .upload-text {
-            font-weight: lighter;
-        }
-
-        .avatar-buttons {
-            justify-content: center;
-        }
-
-        .upload-button,
-        .reset-button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .upload-button {
-            background-color: #000;
-            color: #fff;
-            margin-right: 10px;
-        }
-
-        .reset-button {
-            background-color: gray;
-            color: #fff;
-        }
-
-        button:focus {
-            outline: none;
-        }
-
-        .color-palette {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            margin-right: 200px;
-        }
-
-        .icon-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: gray;
-            margin-right: 10px;
-            border: 2px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .profile-circle {
-            width: 40px;
-            height: 40px;
-            margin-top: 10px;
-            border-radius: 50%;
-            background-color: gray;
-            margin-left: 10px;
-            border: 2px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .chat-icon {
-            color: #fff;
-            font-size: 16px;
-        }
-
-        button:focus {
-            outline: none;
-        }
-
-        .toggle-button {
-            width: 40px;
-            height: 20px;
-            background-color: gray;
-            border-radius: 10px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .toggle-button::after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: #fff;
-            transition: transform 0.3s ease;
-        }
-
-        .toggle-button.on {
-            background-color: rgb(63, 166, 207);
-        }
-
-        .toggle-button.on::after {
-            transform: translateX(20px);
-        }
-
-        .input-container {
-            display: flex;
-            align-items: flex-end;
-            margin-left: 20px;
-        }
-
-        .label {
-            margin-right: 5px;
-            font-weight: lighter;
-            text-align: center;
-            display: grid;
-        }
-
-        .label-hide {
-            margin-right: 5px;
-            font-weight: lighter;
-            text-align: center;
-            display: grid;
-        }
-
-        .flex-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .first-step-about {
-            width: 100%;
-            height: 34vw;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-
-        .slider {
-            width: 100%;
-            height: 10px;
-            background-color: #f5f5f5;
-            position: relative;
-            margin-bottom: 50px;
-            margin-top: 50px;
-            cursor: pointer;
-        }
-
-        .slider-track {
-            width: 0;
-            height: 100%;
-            background-color: #505155;
-            position: absolute;
-            top: 0;
-            left: 5px;
-            /* Adjusted position to align with circles */
-            border-radius: 5px;
-            /* Rounded corners */
-        }
-
-        .slider-thumb {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            border: 5px solid #505155;
-            position: absolute;
-            top: -5px;
-            transform: translateX(-50%);
-            cursor: pointer;
-            z-index: 2;
-            /* Ensures the large circle is above the small circles */
-        }
-
-        .slider-mark {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: #fff;
-            position: absolute;
-            top: 1px;
-            /* Adjusted position to align with line */
-        }
-
-        .slider-mark-label {
-            position: absolute;
-            top: 20px;
-            /* Adjusted position to display below the line */
-            font-size: 12px;
-            text-align: center;
-            width: 30px;
-            left: 0;
-            transform: translateX(-50%);
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #000;
-        }
-
-        th,
-        td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .step-description {
-            font-size: 12px;
-            margin-left: 10px;
-        }
-
-        .chatbot {
-            margin-left: 20px;
-            right: 35px;
-            bottom: 90px;
-            width: 420px;
-            background: #fff;
-            border-radius: 15px;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.5);
-            transform-origin: bottom right;
-            box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
-                0 32px 64px -48px rgba(0, 0, 0, 0.5);
-            transition: all 0.1s ease;
-        }
-
-        .show-chatbot .chatbot {
-            /* width: 100%;
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+      * {
+        font-family: 'saira';
+      }
+
+      .page-container {
+        display: flex;
+        color: inherit;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+          Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+      }
+
+      .left-section {
+        flex-basis: 15%;
+        background-color: #f1f1f1;
+        padding: 20px;
+      }
+
+      .step-circles {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        /* Align step descriptions to the right */
+        width: 200px;
+        /* Adjust the width as needed */
+        height: 400px;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        /* Add padding to create space between circles and descriptions */
+      }
+
+      .step-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #e0e0e0;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 10px;
+        /* Add margin between circles */
+      }
+
+      .step-circle.complete {
+        background-color: black;
+        color: white;
+      }
+
+      .step-circle.complete span {
+        display: none;
+      }
+
+      .step-circle.complete::after {
+        content: '\2713';
+        font-size: 24px;
+      }
+
+      .step-circle.active {
+        border: 2px solid #444;
+      }
+
+      .line {
+        width: 4px;
+        flex: 1;
+        background-color: #e0e0e0;
+      }
+
+      .right-section {
+        flex-basis: 85%;
+        overflow-y: scroll;
+        background-image: (
+          "data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cbcbcb' fill-opacity='0.21'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"
+        );
+      }
+
+      .right-section-part {
+        display: none;
+        padding-left: 20px;
+      }
+
+      .right-section-part.active {
+        display: block;
+      }
+
+      .right-section-part button.show-indicator::after {
+        content: '';
+        margin-left: 5px;
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: red;
+        border-radius: 50%;
+      }
+
+      .right-section-part #chatbotTypes {
+        display: none;
+        margin-top: 10px;
+        padding-left: 20px;
+        border-left: 2px solid red;
+      }
+
+      .right-section-part nav {
+        display: flex;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      nav p {
+        margin-right: auto;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      nav button {
+        background-color: #fff;
+        border: 2px solid black;
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 15px;
+        margin-left: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      nav button:hover {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .continue-button {
+        background-color: #fff;
+        border: 2px solid black;
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 15px;
+        margin-left: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        background-color: black;
+        color: #fff;
+      }
+
+      .step2 {
+        flex-basis: 50%;
+      }
+
+      .step.active {
+        display: block;
+      }
+
+      .step2-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .step2-container.active {
+        display: block;
+      }
+
+      .glass-effect {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial', sans-serif;
+        max-width: 95%;
+      }
+
+      .glass-effect-hide {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial', sans-serif;
+        max-width: 95%;
+      }
+
+      .inpt[type='email'],
+      .inpt[type='text'] {
+        border: 0.5px solid rgb(185, 183, 183);
+        width: 98%;
+        height: 25px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        padding: 5px;
+        transition: border-color 0.3s ease;
+        color: rgb(185, 183, 183);
+      }
+
+      .inpt[type='email'].bb-bt,
+      .inpt[type='text'].bb-bt {
+        border: 0.5px solid rgb(58, 58, 58);
+        color: #000000;
+        height: 50px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+          'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+
+      .inpt[type='email']:focus,
+      .inpt[type='text']:focus {
+        border-color: rgb(117, 169, 248);
+      }
+
+      .box {
+        flex: 1 1 100%;
+        position: relative;
+        height: fit-content;
+        font-family: 'Arial', sans-serif;
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .button {
+        text-align: left;
+        position: relative;
+        background-color: #fff;
+        border: none;
+        width: 100%;
+        height: 40px;
+        font-size: 17px;
+        cursor: pointer;
+        z-index: 1;
+      }
+
+      .button::before {
+        content: '\f077';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        display: inline-block;
+        margin-right: 10px;
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+      }
+
+      .button.rotate::before {
+        transform: rotate(0deg);
+      }
+
+      .content {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .box.open .content {
+        display: block;
+      }
+
+      .box.open {
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .header {
+        margin-bottom: 10px;
+      }
+
+      .header h2 {
+        font-weight: bold;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        background-color: gray;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .buttons button {
+        width: 50%;
+        padding: 10px;
+        margin: 2px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        background-color: transparent;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .buttons button:hover {
+        background-color: white;
+        color: gray;
+      }
+
+      .detail {
+        display: none;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial', sans-serif;
+        max-width: 95%;
+      }
+
+      .detail.open {
+        display: block;
+      }
+
+      .preview {
+        display: none;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial', sans-serif;
+        max-width: 95%;
+      }
+
+      .preview.open {
+        display: block;
+      }
+
+      .answer {
+        display: none;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial', sans-serif;
+        max-width: 95%;
+      }
+
+      .answer.open {
+        display: block;
+      }
+
+      .creativity {
+        display: none;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial', sans-serif;
+        max-width: 95%;
+      }
+
+      .creativity.open {
+        display: block;
+      }
+
+      .avatar-box {
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .title {
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 21px;
+      }
+
+      .subtitle {
+        font-weight: lighter;
+        margin-bottom: 10px;
+      }
+
+      .avatar-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+        display: flex;
+      }
+
+      .avatar-circle {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        background-color: gray;
+        border-radius: 50%;
+        display: flex;
+        margin-left: 0;
+        overflow: hidden;
+      }
+
+      .avatar-preview {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .icon-preview {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .upload-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        cursor: pointer;
+      }
+
+      .avatar-circle:hover .upload-overlay {
+        opacity: 1;
+      }
+
+      .upload-text {
+        font-weight: lighter;
+      }
+
+      .avatar-buttons {
+        justify-content: center;
+      }
+
+      .upload-button,
+      .reset-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .upload-button {
+        background-color: #000;
+        color: #fff;
+        margin-right: 10px;
+      }
+
+      .reset-button {
+        background-color: gray;
+        color: #fff;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      .color-palette {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        margin-right: 200px;
+      }
+
+      .icon-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: gray;
+        margin-right: 10px;
+        border: 2px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .profile-circle {
+        width: 40px;
+        height: 40px;
+        margin-top: 10px;
+        border-radius: 50%;
+        background-color: gray;
+        margin-left: 10px;
+        border: 2px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .chat-icon {
+        color: #fff;
+        font-size: 16px;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      .toggle-button {
+        width: 40px;
+        height: 20px;
+        background-color: gray;
+        border-radius: 10px;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .toggle-button::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: #fff;
+        transition: transform 0.3s ease;
+      }
+
+      .toggle-button.on {
+        background-color: rgb(63, 166, 207);
+      }
+
+      .toggle-button.on::after {
+        transform: translateX(20px);
+      }
+
+      .input-container {
+        display: flex;
+        align-items: flex-end;
+        margin-left: 20px;
+      }
+
+      .label {
+        margin-right: 5px;
+        font-weight: lighter;
+        text-align: center;
+        display: grid;
+      }
+
+      .label-hide {
+        margin-right: 5px;
+        font-weight: lighter;
+        text-align: center;
+        display: grid;
+      }
+
+      .flex-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .first-step-about {
+        width: 100%;
+        height: 34vw;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+          'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+
+      .slider {
+        width: 100%;
+        height: 10px;
+        background-color: #f5f5f5;
+        position: relative;
+        margin-bottom: 50px;
+        margin-top: 50px;
+        cursor: pointer;
+      }
+
+      .slider-track {
+        width: 0;
+        height: 100%;
+        background-color: #505155;
+        position: absolute;
+        top: 0;
+        left: 5px;
+        /* Adjusted position to align with circles */
+        border-radius: 5px;
+        /* Rounded corners */
+      }
+
+      .slider-thumb {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        border: 5px solid #505155;
+        position: absolute;
+        top: -5px;
+        transform: translateX(-50%);
+        cursor: pointer;
+        z-index: 2;
+        /* Ensures the large circle is above the small circles */
+      }
+
+      .slider-mark {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #fff;
+        position: absolute;
+        top: 1px;
+        /* Adjusted position to align with line */
+      }
+
+      .slider-mark-label {
+        position: absolute;
+        top: 20px;
+        /* Adjusted position to display below the line */
+        font-size: 12px;
+        text-align: center;
+        width: 30px;
+        left: 0;
+        transform: translateX(-50%);
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #000;
+      }
+
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .step-description {
+        font-size: 12px;
+        margin-left: 10px;
+      }
+
+      .chatbot {
+        margin-left: 20px;
+        right: 35px;
+        bottom: 90px;
+        width: 420px;
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.5);
+        transform-origin: bottom right;
+        box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+          0 32px 64px -48px rgba(0, 0, 0, 0.5);
+        transition: all 0.1s ease;
+      }
+
+      .show-chatbot .chatbot {
+        /* width: 100%;
             height: 100%; */
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1);
-        }
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+      }
 
-        .chatbot header {
-            position: relative;
-            text-align: center;
-            color: #fff;
-            background-color: #807f7f;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+      .chatbot header {
+        position: relative;
+        text-align: center;
+        color: #fff;
+        background-color: #807f7f;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
 
-        .chatbot header span {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            display: none;
-            cursor: pointer;
-            transform: translateY(-50%);
-        }
+      .chatbot header span {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        display: none;
+        cursor: pointer;
+        transform: translateY(-50%);
+      }
 
-        header h2 {
-            font-size: 1.4rem;
-        }
+      header h2 {
+        font-size: 1.4rem;
+      }
 
-        .chatbot .chatbox {
-            overflow-y: auto;
-            height: 510px;
-        }
+      .chatbot .chatbox {
+        overflow-y: auto;
+        height: 510px;
+      }
 
-        .chatbot :where(.chatbox, textarea)::-webkit-scrollbar {
-            width: 6px;
-        }
+      .chatbot :where(.chatbox, textarea)::-webkit-scrollbar {
+        width: 6px;
+      }
 
-        .chatbot :where(.chatbox, textarea)::-webkit-scrollbar-track {
-            background: #fff;
-            border-radius: 25px;
-        }
+      .chatbot :where(.chatbox, textarea)::-webkit-scrollbar-track {
+        background: #fff;
+        border-radius: 25px;
+      }
 
-        .chatbot :where(.chatbox, textarea)::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 25px;
-        }
+      .chatbot :where(.chatbox, textarea)::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 25px;
+      }
 
-        .chatbox .chat {
-            display: flex;
-            list-style: none;
-        }
+      .chatbox .chat {
+        display: flex;
+        list-style: none;
+      }
 
-        .chatbox .outgoing {
-            margin: 20px 0;
-            justify-content: flex-end;
-        }
+      .chatbox .outgoing {
+        margin: 20px 0;
+        justify-content: flex-end;
+      }
 
+      .chatbox .chat p {
+        white-space: pre-wrap;
+        padding: 12px 16px;
+        border-radius: 10px 10px 0 10px;
+        max-width: 75%;
+        color: #fff;
+        font-size: 0.95rem;
+        background-color: #807f7f;
+      }
 
+      .chatbox .incoming p {
+        border-radius: 10px 10px 10px 0;
+      }
 
-        .chatbox .chat p {
-            white-space: pre-wrap;
-            padding: 12px 16px;
-            border-radius: 10px 10px 0 10px;
-            max-width: 75%;
-            color: #fff;
-            font-size: 0.95rem;
-            background-color: #807f7f;
-        }
+      .chatbox .chat p.error {
+        color: #721c24;
+        background: #f8d7da;
+      }
 
-        .chatbox .incoming p {
-            border-radius: 10px 10px 10px 0;
-        }
+      .chatbox .incoming p {
+        color: #000;
+        background: #f2f2f2;
+      }
 
-        .chatbox .chat p.error {
-            color: #721c24;
-            background: #f8d7da;
-        }
+      .chatbot .chat-input {
+        display: flex;
+        gap: 5px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: #fff;
+        padding: 3px 20px;
+        border-top: 1px solid #ddd;
+      }
 
-        .chatbox .incoming p {
-            color: #000;
-            background: #f2f2f2;
-        }
+      .chat-input textarea {
+        height: 55px;
+        width: 100%;
+        border: none;
+        outline: none;
+        resize: none;
+        max-height: 180px;
+        padding: 15px 15px 15px 0;
+        font-size: 0.95rem;
+      }
 
-        .chatbot .chat-input {
-            display: flex;
-            gap: 5px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: #fff;
-            padding: 3px 20px;
-            border-top: 1px solid #ddd;
-        }
-
-        .chat-input textarea {
-            height: 55px;
-            width: 100%;
-            border: none;
-            outline: none;
-            resize: none;
-            max-height: 180px;
-            padding: 15px 15px 15px 0;
-            font-size: 0.95rem;
-        }
-
-        .chat-input textarea:valid~span {
-            visibility: visible;
-        }
+      .chat-input textarea:valid ~ span {
+        visibility: visible;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="page-container">
-        <div class="left-section">
-            <div class="step-circles" id="stepList">
-                <div style="display: flex;">
-                    <div class="step-circle active" onclick="goToStep(1)">
-                        <span>1</span>
-                    </div>
-                    <div class="step-description">Step 1<br /> Create your first document</div>
-                </div>
-                <div class="line"></div>
-                <div style="display: flex;">
-                    <div class="step-circle" onclick="goToStep(2)">
-                        <span>2</span>
-                    </div>
-                    <div class="step-description">Step 2<br />Create your chatbot</div>
-                </div>
+      <div class="left-section">
+        <div class="step-circles" id="stepList">
+          <div style="display: flex">
+            <div class="step-circle active" onclick="goToStep(1)">
+              <span>1</span>
             </div>
+            <div class="step-description">
+              Step 1<br />
+              Create your first document
+            </div>
+          </div>
+          <div class="line"></div>
+          <div style="display: flex">
+            <div class="step-circle" onclick="goToStep(2)">
+              <span>2</span>
+            </div>
+            <div class="step-description">Step 2<br />Create your chatbot</div>
+          </div>
         </div>
-        <div class="right-section">
-            <div class="right-section-part active" id="step1">
-                <h2>Let's write your first document</h2>
-                <div class="subtitle">This document is used to train your chatbot. You can always edit or add more
-                    later.</div>
-                <p>about test</p>
-                <div class="glass-effect">
-                    <textarea id="first-step-about" class="first-step-about">
+      </div>
+      <div class="right-section">
+        <div class="right-section-part active" id="step1">
+          <h2>Let's write your first document</h2>
+          <div class="subtitle">
+            This document is used to train your chatbot. You can always edit or
+            add more later.
+          </div>
+          <p>about test</p>
+          <div class="glass-effect">
+            <textarea id="first-step-about" class="first-step-about">
 1. General Description
 test is a leading company in the [industry name] sector. Founded in [insert founding year here], we have consistently delivered high-quality solutions to our clients, making us one of the most trusted names in the industry. Our team of dedicated professionals works tirelessly to meet the unique demands of our diverse clientele.
 
@@ -855,1210 +868,1682 @@ Website: [insert website URL here]
 4. Our Business Hours
 Monday - Friday: [insert opening hours, e.g., 9:00 AM - 6:00 PM]
 Saturday: [insert Saturday hours, e.g., 10:00 AM - 4:00 PM]
-Sunday: [insert Sunday hours, e.g., Closed]</textarea>
-                    <div style="display: flex; justify-content: end; margin-top: 10px;">
-                        <button class="continue-button" onclick="nextStep()">Continue</button>
-                    </div>
-                </div>
+Sunday: [insert Sunday hours, e.g., Closed]</textarea
+            >
+            <div style="display: flex; justify-content: end; margin-top: 10px">
+              <button class="continue-button" onclick="nextStep()">
+                Continue
+              </button>
             </div>
-            <div class="right-section-part" id="step2">
-                <nav>
-                    <p>chatbot</p>
-                    <button class="share-button">share</button>
-                    <button id="submitButton" class="continue-button" onclick="nextStep()">Finish onboarding</button>
-                </nav>
+          </div>
+        </div>
+        <div class="right-section-part" id="step2">
+          <nav>
+            <p>chatbot</p>
+            <button class="share-button">share</button>
+            <button
+              id="submitButton"
+              class="continue-button"
+              onclick="finishOnboarding()"
+            >
+              Finish onboarding
+            </button>
+          </nav>
 
-                <div class="step2-container">
-                    <div class="step2">
-                        <div>
-                            <span>Name</span><br>
-                            <input class="inpt" type="text" id="nameInput" />
+          <div class="step2-container">
+            <div class="step2">
+              <div>
+                <span>Name</span><br />
+                <input class="inpt" type="text" id="nameInput" />
+              </div>
+
+              <div class="box" id="chatbot-type">
+                <button class="button" onclick="toggleContent('chatbot-type')">
+                  Chatbot Type
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Chatbot Type</div>
+                    <div class="subtitle">Select type</div>
+                    <div class="buttons">
+                      <button
+                        id="chatbot-button"
+                        onclick="showDetail('chatbot')"
+                      >
+                        Chatbot
+                      </button>
+                      <button
+                        id="ai-agent-button"
+                        onclick="showDetail('ai-agent')"
+                      >
+                        AI Agent
+                      </button>
+                    </div>
+                    <div class="detail" id="chatbot-detail">
+                      <h3>Chatbot Detail</h3>
+                      <p>
+                        Best for customer service, sales, and marketing use
+                        cases. Chatbots can be trained to answer questions and
+                        provide recommendations.
+                      </p>
+                    </div>
+                    <div class="detail" id="ai-agent-detail">
+                      <h3>AI Agent Detail</h3>
+                      <p>
+                        Can perform various tasks based on tools you connect.
+                        For example, you can create an AI agent that can create
+                        a Jira ticket, or create a pull request in GitHub. View
+                        existing tools.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box" id="chatbot-ui">
+                <button class="button" onclick="toggleContent('chatbot-ui')">
+                  Chatbot UI
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Brand Image</div>
+                    <div class="subtitle">Chatbot Avatar</div>
+                    <div class="avatar-wrapper">
+                      <div class="avatar-circle">
+                        <div class="avatar-preview"></div>
+                        <div class="upload-overlay">
+                          <span class="upload-text">Upload Avatar</span>
+                          <input
+                            type="file"
+                            id="image-upload"
+                            accept="image/*"
+                            onchange="handleImageUpload(event)"
+                          />
                         </div>
-
-                        <div class="box" id="chatbot-type">
-                            <button class="button" onclick="toggleContent('chatbot-type')">Chatbot Type</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Chatbot Type</div>
-                                    <div class="subtitle">Select type</div>
-                                    <div class="buttons">
-                                        <button id="chatbot-button" onclick="showDetail('chatbot')">Chatbot</button>
-                                        <button id="ai-agent-button" onclick="showDetail('ai-agent')">AI Agent</button>
-                                    </div>
-                                    <div class="detail" id="chatbot-detail">
-                                        <h3>Chatbot Detail</h3>
-                                        <p>Best for customer service, sales, and marketing use cases. Chatbots can be
-                                            trained to answer questions and provide recommendations.</p>
-                                    </div>
-                                    <div class="detail" id="ai-agent-detail">
-                                        <h3>AI Agent Detail</h3>
-                                        <p>Can perform various tasks based on tools you connect. For example, you can
-                                            create an AI agent that can create a Jira ticket, or create a pull request
-                                            in GitHub. View existing tools.</p>
-                                    </div>
-                                </div>
-                            </div>
+                      </div>
+                    </div>
+                    <div class="avatar-buttons">
+                      <button
+                        class="upload-button"
+                        onclick="document.getElementById('image-upload').click()"
+                      >
+                        Upload Image
+                      </button>
+                      <button class="reset-button" onclick="resetAvatar()">
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Chat icon color</div>
+                    <div class="subtitle">
+                      Pick color to fit your site theme
+                    </div>
+                    <div class="avatar-wrapper">
+                      <div class="avatar-circle">
+                        <div class="icon-preview"></div>
+                        <div class="upload-overlay">
+                          <span class="upload-text">Upload icon image</span>
+                          <input
+                            type="file"
+                            id="icon-upload"
+                            accept="image/*"
+                            onchange="handleIconUpload(event)"
+                          />
                         </div>
-
-                        <div class="box" id="chatbot-ui">
-                            <button class="button" onclick="toggleContent('chatbot-ui')">Chatbot UI</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Brand Image</div>
-                                    <div class="subtitle">Chatbot Avatar</div>
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar-circle">
-                                            <div class="avatar-preview"></div>
-                                            <div class="upload-overlay">
-                                                <span class="upload-text">Upload Avatar</span>
-                                                <input type="file" id="image-upload" accept="image/*"
-                                                    onchange="handleImageUpload(event)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="avatar-buttons">
-                                        <button class="upload-button"
-                                            onclick="document.getElementById('image-upload').click()">Upload
-                                            Image</button>
-                                        <button class="reset-button" onclick="resetAvatar()">Reset</button>
-                                    </div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Chat icon color</div>
-                                    <div class="subtitle">Pick color to fit your site theme</div>
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar-circle">
-                                            <div class="icon-preview"></div>
-                                            <div class="upload-overlay">
-                                                <span class="upload-text">Upload icon image</span>
-                                                <input type="file" id="icon-upload" accept="image/*"
-                                                    onchange="handleIconUpload(event)">
-                                            </div>
-                                        </div>
-                                        <div class="color-palette">
-                                            <input type="color" id="color-picker" onchange="changeAvatarColor(event)">
-                                            <div class="icon-circle"> <i class="fas fa-comments"></i></div>
-                                            <div class="chat-icon">
-                                                <i class="fas fa-comment"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="avatar-buttons">
-                                        <button class="upload-button"
-                                            onclick="document.getElementById('icon-upload').click()">Upload
-                                            Image</button>
-                                        <button class="reset-button" onclick="resetIcon()">Reset</button>
-                                    </div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Header</div>
-                                    <div class="subtitle">Chatbot header text</div>
-                                    <input class="inpt" type="text" id="chatbot-header" oninput="updateheader()">
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Subheader</div>
-                                    <div class="subtitle">Chatbot header text</div>
-                                    <input class="inpt" type="text" id="chatbot-subheader"
-                                        oninput="updatesubheader()" />
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Chatbot window size</div>
-                                    <div class="subtitle">Set chatbot widget size</div>
-                                    <div style="display: flex;margin-bottom: 15px;margin-left: 25px;">
-                                        <div class="toggle-button on" onclick="hideExpand(); toggleStatus(this);"></div>
-                                        <div class="label" style="font-weight: 100;">‌ Allow expand</div>
-                                    </div>
-                                    <div class="input-container">
-                                        <div class="label">Default width
-                                            <input type="number" class="glass-effect" value="360" style="width: 100px;"
-                                                id="default-width" oninput="change_width()">
-                                        </div>
-                                        <select id="unit-selector-dfw" class="glass-effect" style="width: 100px;">
-                                            <option value="px">px</option>
-                                            <option value="vm">vm</option>
-                                            <option value="%">%</option>
-                                        </select>
-                                        <div class="label-hide">Expand width
-                                            <input type="number" class="glass-effect-hide" value="360"
-                                                style="width: 100px;" id="expand-width">
-                                        </div>
-                                        <select id="unit-selector-exw" class="glass-effect-hide" style="width: 100px;">
-                                            <option value="px">px</option>
-                                            <option value="vm">vm</option>
-                                            <option value="%">%</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-container">
-                                        <div class="label">Default height
-                                            <input type="number" class="glass-effect" value="640" style="width: 100px;"
-                                                id="default-height" oninput="change_height()">
-                                        </div>
-                                        <select id="unit-selector-dfh" class="glass-effect" style="width: 100px;">
-                                            <option value="px">px</option>
-                                            <option value="vm">vm</option>
-                                            <option value="%">%</option>
-                                        </select>
-                                        <div class="label-hide">Expand height
-                                            <input type="number" class="glass-effect-hide" value="640"
-                                                style="width: 100px;" id="expand-height">
-                                        </div>
-                                        <select id="unit-selector-exh" class="glass-effect-hide" style="width: 100px;">
-                                            <option value="px">px</option>
-                                            <option value="vm">vm</option>
-                                            <option value="%">%</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </div>
+                      </div>
+                      <div class="color-palette">
+                        <input
+                          type="color"
+                          id="color-picker"
+                          onchange="changeAvatarColor(event)"
+                        />
+                        <div class="icon-circle">
+                          <i class="fas fa-comments"></i>
                         </div>
-
-                        <div class="box" id="notification">
-                            <button class="button" onclick="toggleContent('notification')">Notifications</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Notification email</div>
-                                    <div class="subtitle">Live agent requests and chat transcripts will be sent to this
-                                        email</div>
-                                    <input id="email" type="email" class="inpt" placeholder="support@example.com">
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Live agent requests</div>
-                                    <div class="subtitle">Send notification to your Email when client requests Live
-                                        Agent</div>
-                                    <div id="send-notif" class="toggle-button" onclick="toggleStatus(this);"></div>
-                                    <div class="subtitle">Scenarios when live agent should be notified</div>
-                                    <input type="text" class="inpt bb-bt" id="live-agent-req">
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Receive chat transcripts</div>
-                                    <div class="flex-container">
-                                        <div class="subtitle">Send chat transcripts to your notification email once they
-                                            are finished</div>
-                                        <div id="send-transcripts" class="toggle-button on" onclick="toggleStatus(this);"></div>
-                                    </div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Include Summary</div>
-                                    <div class="flex-container">
-                                        <div class="subtitle">Add short summary of the conversation to the transcript
-                                        </div>
-                                        <div id="show-summary" class="toggle-button on" onclick="toggleStatus(this);"></div>
-                                    </div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Include Unresolved Requests</div>
-                                    <div class="flex-container">
-                                        <div class="subtitle">Add Unresolved requests to the transcript</div>
-                                        <div id="unresolved-req" class="toggle-button on" onclick="toggleStatus(this);"></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="chat-icon">
+                          <i class="fas fa-comment"></i>
                         </div>
-                        <div class="box" id="Interactions">
-                            <button class="button" onclick="toggleContent('Interactions')">Interactions</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Require name and email before chat</div>
-                                    <div class="subtitle">Always ask for name and email before chat</div>
-                                    <div id="ask-name" class="toggle-button" onclick="toggleStatus(this);"></div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Collect feedback</div>
-                                    <div class="subtitle">Ask for feedback after chat is finished</div>
-                                    <div id="ask-feedback" class="toggle-button on" onclick="toggleStatus(this);"></div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Welcome message(s)</div>
-                                    <div class="subtitle">Messages that client will see when first opening chat</div>
-                                    <textarea placeholder="Shift + Enter for new line
+                      </div>
+                    </div>
+                    <div class="avatar-buttons">
+                      <button
+                        class="upload-button"
+                        onclick="document.getElementById('icon-upload').click()"
+                      >
+                        Upload Image
+                      </button>
+                      <button class="reset-button" onclick="resetIcon()">
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Header</div>
+                    <div class="subtitle">Chatbot header text</div>
+                    <input
+                      class="inpt"
+                      type="text"
+                      id="chatbot-header"
+                      oninput="updateheader()"
+                    />
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Subheader</div>
+                    <div class="subtitle">Chatbot header text</div>
+                    <input
+                      class="inpt"
+                      type="text"
+                      id="chatbot-subheader"
+                      oninput="updatesubheader()"
+                    />
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Chatbot window size</div>
+                    <div class="subtitle">Set chatbot widget size</div>
+                    <div
+                      style="
+                        display: flex;
+                        margin-bottom: 15px;
+                        margin-left: 25px;
+                      "
+                    >
+                      <div
+                        class="toggle-button on"
+                        onclick="hideExpand(); toggleStatus(this);"
+                      ></div>
+                      <div class="label" style="font-weight: 100">
+                        ‌ Allow expand
+                      </div>
+                    </div>
+                    <div class="input-container">
+                      <div class="label">
+                        Default width
+                        <input
+                          type="number"
+                          class="glass-effect"
+                          value="360"
+                          style="width: 100px"
+                          id="default-width"
+                          oninput="change_width()"
+                        />
+                      </div>
+                      <select
+                        id="unit-selector-dfw"
+                        class="glass-effect"
+                        style="width: 100px"
+                      >
+                        <option value="px">px</option>
+                        <option value="vm">vm</option>
+                        <option value="%">%</option>
+                      </select>
+                      <div class="label-hide">
+                        Expand width
+                        <input
+                          type="number"
+                          class="glass-effect-hide"
+                          value="360"
+                          style="width: 100px"
+                          id="expand-width"
+                        />
+                      </div>
+                      <select
+                        id="unit-selector-exw"
+                        class="glass-effect-hide"
+                        style="width: 100px"
+                      >
+                        <option value="px">px</option>
+                        <option value="vm">vm</option>
+                        <option value="%">%</option>
+                      </select>
+                    </div>
+                    <div class="input-container">
+                      <div class="label">
+                        Default height
+                        <input
+                          type="number"
+                          class="glass-effect"
+                          value="640"
+                          style="width: 100px"
+                          id="default-height"
+                          oninput="change_height()"
+                        />
+                      </div>
+                      <select
+                        id="unit-selector-dfh"
+                        class="glass-effect"
+                        style="width: 100px"
+                      >
+                        <option value="px">px</option>
+                        <option value="vm">vm</option>
+                        <option value="%">%</option>
+                      </select>
+                      <div class="label-hide">
+                        Expand height
+                        <input
+                          type="number"
+                          class="glass-effect-hide"
+                          value="640"
+                          style="width: 100px"
+                          id="expand-height"
+                        />
+                      </div>
+                      <select
+                        id="unit-selector-exh"
+                        class="glass-effect-hide"
+                        style="width: 100px"
+                      >
+                        <option value="px">px</option>
+                        <option value="vm">vm</option>
+                        <option value="%">%</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box" id="notification">
+                <button class="button" onclick="toggleContent('notification')">
+                  Notifications
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Notification email</div>
+                    <div class="subtitle">
+                      Live agent requests and chat transcripts will be sent to
+                      this email
+                    </div>
+                    <input
+                      id="email"
+                      type="email"
+                      class="inpt"
+                      placeholder="support@example.com"
+                    />
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Live agent requests</div>
+                    <div class="subtitle">
+                      Send notification to your Email when client requests Live
+                      Agent
+                    </div>
+                    <div
+                      id="send-notif"
+                      class="toggle-button"
+                      onclick="toggleStatus(this);"
+                    ></div>
+                    <div class="subtitle">
+                      Scenarios when live agent should be notified
+                    </div>
+                    <input type="text" class="inpt bb-bt" id="live-agent-req" />
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Receive chat transcripts</div>
+                    <div class="flex-container">
+                      <div class="subtitle">
+                        Send chat transcripts to your notification email once
+                        they are finished
+                      </div>
+                      <div
+                        id="send-transcripts"
+                        class="toggle-button on"
+                        onclick="toggleStatus(this);"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Include Summary</div>
+                    <div class="flex-container">
+                      <div class="subtitle">
+                        Add short summary of the conversation to the transcript
+                      </div>
+                      <div
+                        id="show-summary"
+                        class="toggle-button on"
+                        onclick="toggleStatus(this);"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Include Unresolved Requests</div>
+                    <div class="flex-container">
+                      <div class="subtitle">
+                        Add Unresolved requests to the transcript
+                      </div>
+                      <div
+                        id="unresolved-req"
+                        class="toggle-button on"
+                        onclick="toggleStatus(this);"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box" id="Interactions">
+                <button class="button" onclick="toggleContent('Interactions')">
+                  Interactions
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Require name and email before chat</div>
+                    <div class="subtitle">
+                      Always ask for name and email before chat
+                    </div>
+                    <div
+                      id="ask-name"
+                      class="toggle-button"
+                      onclick="toggleStatus(this);"
+                    ></div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Collect feedback</div>
+                    <div class="subtitle">
+                      Ask for feedback after chat is finished
+                    </div>
+                    <div
+                      id="ask-feedback"
+                      class="toggle-button on"
+                      onclick="toggleStatus(this);"
+                    ></div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Welcome message(s)</div>
+                    <div class="subtitle">
+                      Messages that client will see when first opening chat
+                    </div>
+                    <textarea
+                      placeholder="Shift + Enter for new line
 Hi there!👋
-I'm here if you have any questions🙂" name="welcomeMessages" id="welcomeMessages" class="inpt bb-bt"
-                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Popup message(s)</div>
-                                    <div class="subtitle">Messages that appear on top of chat icon</div>
-                                    <textarea placeholder="Shift + Enter for new line
+I'm here if you have any questions🙂"
+                      name="welcomeMessages"
+                      id="welcomeMessages"
+                      class="inpt bb-bt"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    ></textarea>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Popup message(s)</div>
+                    <div class="subtitle">
+                      Messages that appear on top of chat icon
+                    </div>
+                    <textarea
+                      placeholder="Shift + Enter for new line
 Hi there!👋
-Want chatbot like that?" name="popupMessages" id="popupMessages" class="inpt bb-bt"
-                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Predefined questions</div>
-                                    <div class="subtitle">Conversation starters that client can choose from</div>
-                                    <textarea placeholder="Shift + Enter for new line
+Want chatbot like that?"
+                      name="popupMessages"
+                      id="popupMessages"
+                      class="inpt bb-bt"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    ></textarea>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Predefined questions</div>
+                    <div class="subtitle">
+                      Conversation starters that client can choose from
+                    </div>
+                    <textarea
+                      placeholder="Shift + Enter for new line
 Tell me about your pricing plans?👋
-How can I create chatbot??" name="conversationStarters" id="conversationStarters" class="inpt bb-bt"
-                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Fallback message</div>
-                                    <div class="subtitle">Messages that Chatbot can respond with when it can't provide
-                                        an answer.<br />Eg. contact information</div>
-                                    <textarea placeholder="Feel free to reach out to us at contact@company.com"
-                                        name="fallbackResponse" id="fallbackResponse" class="inpt bb-bt"
-                                        style="height: 100px; width: 98%; font-family: saira;">Sorry I don't know</textarea>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Live agent acknowledge message</div>
-                                    <div class="subtitle">Messages of confirmation that Live Agent was requested</div>
-                                    <textarea
-                                        placeholder="Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you"
-                                        name="liveAgentAcknowledgeMessage" id="liveAgentAcknowledgeMessage"
-                                        class="inpt bb-bt"
-                                        style="height: 100px; width: 98%; font-family: saira;">Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you</textarea>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Live agent message</div>
-                                    <div class="subtitle">Message that client will receive while waiting for Live Agent
-                                    </div>
-                                    <textarea placeholder="Live agent was notified and will join as soon as possible"
-                                        name="liveAgentWaitMessage" id="liveAgentWaitMessage"
-                                        class="Interactions___StyledTextarea6-sc-6siynf-10 kpJFfg"
-                                        style="height: 100px; width: 98%; font-family: saira;">Live agent was notified and will join as soon as possible</textarea>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Live agent left conversation message</div>
-                                    <div class="subtitle">Message that client will receive from bot when Live Agent
-                                        leaves the chat</div>
-                                    <textarea
-                                        placeholder="I hope your issue was resolved! I'm here if you still need any help."
-                                        name="liveAgentLeftMessage" id="liveAgentLeftMessage"
-                                        class="Interactions___StyledTextarea7-sc-6siynf-11 koMqvw"
-                                        style="height: 100px; width: 98%; font-family: saira;">I hope your issue was resolved! I'm here if you still need any help.</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box" id="brand">
-                            <button class="button" onclick="toggleContent('brand')">Brand</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Company name</div>
-                                    <div class="subtitle">This is used to identify which company/business this chatbot
-                                        works for.<br />Defaults to main organization name</div>
-                                    <input type="text" class="inpt" id="company-name" placeholder="My Company">
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Business website</div>
-                                    <div class="subtitle">Company website if different from main organization website.
-                                    </div>
-                                    <input type="text" class="inpt" id="business-website"
-                                        placeholder="http://www.example.com">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box" id="persona">
-                            <button class="button" onclick="toggleContent('persona')">Persona</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Name</div>
-                                    <div class="subtitle">This name will be displayed in the chat</div>
-                                    <input class="inpt" type="text" id="persona-name">
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Personality prompt</div>
-                                    <div class="subtitle">Define chatbot personality to better align with your company
-                                        brand and needs. Only define personality and not the actual responses.</div>
-                                    <textarea class="inpt" id="customPrompt"
-                                        placeholder="You are friendly Customer Support rep named Alice. You are friendly and can speak English and Spanish."
-                                        name="customPrompt" maxlength="1024" rows="3" aria-invalid="false"
-                                        style="height: 100px; width: 98%; font-family: saira;"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box" id="ai-tuning">
-                            <button class="button" onclick="toggleContent('ai-tuning')">AI Tuning</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Temperature</div>
-                                    <div class="subtitle">Controls randomness: Lowering results in less random
-                                        completions. As the temperature approaches zero, the model will become
-                                        deterministic and repetitive. Higher temperature results in more random
-                                        completions.</div>
-                                    <div class="slider">
-                                        <div class="slider-track" id="slider-track"></div>
-                                        <div class="slider-thumb" id="slider-thumb"></div>
-                                        <div class="slider-mark" style="left: 20%;"></div>
-                                        <div class="slider-mark" style="left: 50%;"></div>
-                                        <div class="slider-mark" style="left: 70%;"></div>
-                                        <div class="slider-mark-label" style="left: 20%;">0.2</div>
-                                        <div class="slider-mark-label" style="left: 50%;">0.5</div>
-                                        <div class="slider-mark-label" style="left: 70%;">0.7</div>
-                                    </div>
-                                    <div style="display: flex; font-size: small;">
-                                        <div>The number of temperature is: ‌</div>
-                                        <div id="slider-value" class="slider-value"></div>
-                                    </div>
-
-
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Response style</div>
-                                    <div class="subtitle">Traditional whole message at once or ChatGPT style stream of
-                                        messages</div>
-                                    <div class="buttons">
-                                        <button onclick="showPreview('chatstyle-preview')">Chat style</button>
-                                        <button onclick="showPreview('chatgptstyle-preview')">ChatGPT style</button>
-                                    </div>
-                                    <div class="preview" id="chatstyle-preview">
-                                        <img src="../public/stream-style.gif" alt="chat-response" width="300"
-                                            height="300">
-
-                                    </div>
-                                    <div class="preview" id="chatgptstyle-preview">
-                                    </div>
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Answer style</div>
-                                    <div class="subtitle">Choose between short, balanced or detailed answers</div>
-                                    <div class="buttons">
-                                        <button id="show-short-answer" onclick="showAnswer('short-answer')">Short</button>
-                                        <button id="show-balanced-answer" onclick="showAnswer('balanced-answer')">Balanced</button>
-                                        <button id="show-detailed-answer" onclick="showAnswer('detailed-answer')">Detailed</button>
-                                    </div>
-                                    <div class="answer" id="short-answer">
-                                        <p></p>
-                                    </div>
-                                    <div class="answer" id="balanced-answer">
-                                        <p></p>
-                                    </div>
-                                    <div class="answer" id="detailed-answer">
-                                        <p>Detailed answers are more detailed and longer. They may also include
-                                            additional
-                                            useful context.</p>
-                                    </div>
-
-                                </div>
-                                <div class="glass-effect">
-                                    <div class="title">Creativiity</div>
-                                    <div class="subtitle">By adjusting this property you change the amount of creativity
-                                        in the answer. The higher the value the more creative the answer will be.</div>
-                                    <div class="buttons">
-                                        <button id="cre-very-low" onclick="showCreativity('very-low')">Very Low</button>
-                                        <button id="cre-low" onclick="showCreativity('low')">Low</button>
-                                        <button id="cre-medium" onclick="showCreativity('medium')">Medium</button>
-                                        <button id="cre-high" onclick="showCreativity('high')">High</button>
-                                    </div>
-                                    <div class="creativity" id="very-low">
-                                        <p>This is the lowest possible creativity setting, which produces the most
-                                            conservative and predictable responses. This typically results in responses
-                                            that
-                                            are highly coherent and closely related to the input request, but may also
-                                            be
-                                            less creative and somewhat repetitive.</p>
-                                    </div>
-                                    <div class="creativity" id="low">
-                                        <p></p>
-                                    </div>
-                                    <div class="creativity" id="medium">
-                                        <p></p>
-                                    </div>
-                                    <div class="creativity" id="high">
-                                        <p></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box" id="docs">
-                            <button class="button" onclick="toggleContent('docs')">Documents</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Chatbot Documents</div>
-                                    <div class="subtitle">List of documents that Chatbot will use to answer requests
-                                    </div>
-                                    <table>
-                                        <tr>
-                                            <td colspan="4">
-                                                <input type="checkbox" id="table1-checkbox1"
-                                                    onclick="selectAllRows('table1')">
-
-                                                <!-- Search input and buttons -->
-                                                <div style="display: contents; margin-left: 20px;">
-                                                    <input type="text" id="table1-searchInput" placeholder="Search"
-                                                        oninput="searchRows('table1')" style="border: none;">
-                                                    <button onclick="searchRows('table1')"
-                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;">Refresh
-                                                        list</button>
-                                                    <button onclick="clearSearch('table1')"
-                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
-                                                            class="fas fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" id="table1-checkbox2">
-                                                <label for="table1-checkbox2">About test</label>
-                                                <a href="https://example.com" style="float: right;">
-                                                    <span class="attachment-icon">
-                                                        <i class="fas fa-external-link-alt"></i>
-                                                    </span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box" id="data-source">
-                            <button class="button" onclick="toggleContent('data-source')">Data sources</button>
-                            <div class="content">
-                                <div class="glass-effect">
-                                    <div class="title">Data Sources</div>
-                                    <div class="subtitle">List of data sources that Chatbot will use to answer requests
-                                    </div>
-                                    <table>
-                                        <tr>
-                                            <td colspan="4">
-                                                <input type="checkbox" id="table2-checkbox1"
-                                                    onclick="selectAllRows('table2')">
-
-                                                <!-- Search input and buttons -->
-                                                <div style="display: contents; margin-left: 20px;">
-                                                    <input type="text" id="table2-searchInput" placeholder="Search"
-                                                        oninput="searchRows('table2')" style="border: none;">
-                                                    <button onclick="searchRows('table2')"
-                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;">Refresh
-                                                        list</button>
-                                                    <button onclick="clearSearch('table2')"
-                                                        style="float: right; border: none; background-color: white; margin-inline: 20px;"><i
-                                                            class="fas fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="display: grid;">
-                                                <label style="text-align: center; color: #585858;">Looks like you don't
-                                                    have any data sources yet</label>
-                                                <button style="width: fit-content; margin-left: 30%;"
-                                                    class="continue-button">Add new data
-                                                    source</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+How can I create chatbot??"
+                      name="conversationStarters"
+                      id="conversationStarters"
+                      class="inpt bb-bt"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    ></textarea>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Fallback message</div>
+                    <div class="subtitle">
+                      Messages that Chatbot can respond with when it can't
+                      provide an answer.<br />Eg. contact information
                     </div>
-                    <div class="step2" style="display: none;" id="chatbot">
-                        <div class="show-chatbot">
-                            <div class="chatbot">
-                                <header style="display: flex;">
-                                    <div class="profile-circle"><i style="font-size: xx-large;" class="fas fa-bolt"></i>
-                                    </div>
-                                    <div style="
-                                    text-align: left;
-                                    margin-left: 22px;
-                                    margin-top: -7px;
-                                ">
-                                        <p style="margin-bottom: -18px; font-weight: 630;" id="chatbot-header-out">AI
-                                            Assistant</p>
-                                        <p style="font-weight: 100;" id="chatbot-subheader-out">Ask me anything</p>
-                                    </div>
-                                    <div><i style="margin: 30px 0 0 100px;" class="fa fa-ellipsis-vertical"></i></div>
-                                    <div><i style="margin: 28px 0 0 25px;"
-                                            class="fa-solid fa-up-right-and-down-left-from-center" id="expand-icon"
-                                            onclick="expand()"></i></div>
-                                    <div><i onclick="close()" class="fa-solid fa-xmark"
-                                            style="margin: 30px 0 0 23px"></i></div>
-                                </header>
-                                <ul class="chatbox">
-                                    <li class="chat incoming">
-                                        <p>Hi there 👋<br>How can I help you today?</p>
-                                    </li>
-                                </ul>
-                                <div class="chat-input">
-                                    <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-                                    <span id="send-btn" class="material-symbols-rounded">send</span>
-                                </div>
-                            </div>
-                        </div>
+                    <textarea
+                      placeholder="Feel free to reach out to us at contact@company.com"
+                      name="fallbackResponse"
+                      id="fallbackResponse"
+                      class="inpt bb-bt"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    >
+Sorry I don't know</textarea
+                    >
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Live agent acknowledge message</div>
+                    <div class="subtitle">
+                      Messages of confirmation that Live Agent was requested
                     </div>
-                    <!-- <div class="step2" style="display: none;" id="ai-agent">
+                    <textarea
+                      placeholder="Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you"
+                      name="liveAgentAcknowledgeMessage"
+                      id="liveAgentAcknowledgeMessage"
+                      class="inpt bb-bt"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    >
+Please wait, live agent will join shortly. Meanwhile can you please leave your email so we can reach out to you in case we miss you</textarea
+                    >
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Live agent message</div>
+                    <div class="subtitle">
+                      Message that client will receive while waiting for Live
+                      Agent
+                    </div>
+                    <textarea
+                      placeholder="Live agent was notified and will join as soon as possible"
+                      name="liveAgentWaitMessage"
+                      id="liveAgentWaitMessage"
+                      class="Interactions___StyledTextarea6-sc-6siynf-10 kpJFfg"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    >
+Live agent was notified and will join as soon as possible</textarea
+                    >
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">
+                      Live agent left conversation message
+                    </div>
+                    <div class="subtitle">
+                      Message that client will receive from bot when Live Agent
+                      leaves the chat
+                    </div>
+                    <textarea
+                      placeholder="I hope your issue was resolved! I'm here if you still need any help."
+                      name="liveAgentLeftMessage"
+                      id="liveAgentLeftMessage"
+                      class="Interactions___StyledTextarea7-sc-6siynf-11 koMqvw"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    >
+I hope your issue was resolved! I'm here if you still need any help.</textarea
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="box" id="brand">
+                <button class="button" onclick="toggleContent('brand')">
+                  Brand
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Company name</div>
+                    <div class="subtitle">
+                      This is used to identify which company/business this
+                      chatbot works for.<br />Defaults to main organization name
+                    </div>
+                    <input
+                      type="text"
+                      class="inpt"
+                      id="company-name"
+                      placeholder="My Company"
+                    />
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Business website</div>
+                    <div class="subtitle">
+                      Company website if different from main organization
+                      website.
+                    </div>
+                    <input
+                      type="text"
+                      class="inpt"
+                      id="business-website"
+                      placeholder="http://www.example.com"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="box" id="persona">
+                <button class="button" onclick="toggleContent('persona')">
+                  Persona
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Name</div>
+                    <div class="subtitle">
+                      This name will be displayed in the chat
+                    </div>
+                    <input class="inpt" type="text" id="persona-name" />
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Personality prompt</div>
+                    <div class="subtitle">
+                      Define chatbot personality to better align with your
+                      company brand and needs. Only define personality and not
+                      the actual responses.
+                    </div>
+                    <textarea
+                      class="inpt"
+                      id="customPrompt"
+                      placeholder="You are friendly Customer Support rep named Alice. You are friendly and can speak English and Spanish."
+                      name="customPrompt"
+                      maxlength="1024"
+                      rows="3"
+                      aria-invalid="false"
+                      style="height: 100px; width: 98%; font-family: saira"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="box" id="ai-tuning">
+                <button class="button" onclick="toggleContent('ai-tuning')">
+                  AI Tuning
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Temperature</div>
+                    <div class="subtitle">
+                      Controls randomness: Lowering results in less random
+                      completions. As the temperature approaches zero, the model
+                      will become deterministic and repetitive. Higher
+                      temperature results in more random completions.
+                    </div>
+                    <div class="slider">
+                      <div class="slider-track" id="slider-track"></div>
+                      <div class="slider-thumb" id="slider-thumb"></div>
+                      <div class="slider-mark" style="left: 20%"></div>
+                      <div class="slider-mark" style="left: 50%"></div>
+                      <div class="slider-mark" style="left: 70%"></div>
+                      <div class="slider-mark-label" style="left: 20%">0.2</div>
+                      <div class="slider-mark-label" style="left: 50%">0.5</div>
+                      <div class="slider-mark-label" style="left: 70%">0.7</div>
+                    </div>
+                    <div style="display: flex; font-size: small">
+                      <div>The number of temperature is: ‌</div>
+                      <div id="slider-value" class="slider-value"></div>
+                    </div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Response style</div>
+                    <div class="subtitle">
+                      Traditional whole message at once or ChatGPT style stream
+                      of messages
+                    </div>
+                    <div class="buttons">
+                      <button onclick="showPreview('chatstyle-preview')">
+                        Chat style
+                      </button>
+                      <button onclick="showPreview('chatgptstyle-preview')">
+                        ChatGPT style
+                      </button>
+                    </div>
+                    <div class="preview" id="chatstyle-preview">
+                      <img
+                        src="../public/stream-style.gif"
+                        alt="chat-response"
+                        width="300"
+                        height="300"
+                      />
+                    </div>
+                    <div class="preview" id="chatgptstyle-preview"></div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Answer style</div>
+                    <div class="subtitle">
+                      Choose between short, balanced or detailed answers
+                    </div>
+                    <div class="buttons">
+                      <button
+                        id="show-short-answer"
+                        onclick="showAnswer('short-answer')"
+                      >
+                        Short
+                      </button>
+                      <button
+                        id="show-balanced-answer"
+                        onclick="showAnswer('balanced-answer')"
+                      >
+                        Balanced
+                      </button>
+                      <button
+                        id="show-detailed-answer"
+                        onclick="showAnswer('detailed-answer')"
+                      >
+                        Detailed
+                      </button>
+                    </div>
+                    <div class="answer" id="short-answer">
+                      <p></p>
+                    </div>
+                    <div class="answer" id="balanced-answer">
+                      <p></p>
+                    </div>
+                    <div class="answer" id="detailed-answer">
+                      <p>
+                        Detailed answers are more detailed and longer. They may
+                        also include additional useful context.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="glass-effect">
+                    <div class="title">Creativiity</div>
+                    <div class="subtitle">
+                      By adjusting this property you change the amount of
+                      creativity in the answer. The higher the value the more
+                      creative the answer will be.
+                    </div>
+                    <div class="buttons">
+                      <button
+                        id="cre-very-low"
+                        onclick="showCreativity('very-low')"
+                      >
+                        Very Low
+                      </button>
+                      <button id="cre-low" onclick="showCreativity('low')">
+                        Low
+                      </button>
+                      <button
+                        id="cre-medium"
+                        onclick="showCreativity('medium')"
+                      >
+                        Medium
+                      </button>
+                      <button id="cre-high" onclick="showCreativity('high')">
+                        High
+                      </button>
+                    </div>
+                    <div class="creativity" id="very-low">
+                      <p>
+                        This is the lowest possible creativity setting, which
+                        produces the most conservative and predictable
+                        responses. This typically results in responses that are
+                        highly coherent and closely related to the input
+                        request, but may also be less creative and somewhat
+                        repetitive.
+                      </p>
+                    </div>
+                    <div class="creativity" id="low">
+                      <p></p>
+                    </div>
+                    <div class="creativity" id="medium">
+                      <p></p>
+                    </div>
+                    <div class="creativity" id="high">
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box" id="docs">
+                <button class="button" onclick="toggleContent('docs')">
+                  Documents
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Chatbot Documents</div>
+                    <div class="subtitle">
+                      List of documents that Chatbot will use to answer requests
+                    </div>
+                    <table>
+                      <tr>
+                        <td colspan="4">
+                          <input
+                            type="checkbox"
+                            id="table1-checkbox1"
+                            onclick="selectAllRows('table1')"
+                          />
+
+                          <!-- Search input and buttons -->
+                          <div style="display: contents; margin-left: 20px">
+                            <input
+                              type="text"
+                              id="table1-searchInput"
+                              placeholder="Search"
+                              oninput="searchRows('table1')"
+                              style="border: none"
+                            />
+                            <button
+                              onclick="searchRows('table1')"
+                              style="
+                                float: right;
+                                border: none;
+                                background-color: white;
+                                margin-inline: 20px;
+                              "
+                            >
+                              Refresh list
+                            </button>
+                            <button
+                              onclick="clearSearch('table1')"
+                              style="
+                                float: right;
+                                border: none;
+                                background-color: white;
+                                margin-inline: 20px;
+                              "
+                            >
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="checkbox" id="table1-checkbox2" />
+                          <label for="table1-checkbox2">About test</label>
+                          <a href="https://example.com" style="float: right">
+                            <span class="attachment-icon">
+                              <i class="fas fa-external-link-alt"></i>
+                            </span>
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="box" id="data-source">
+                <button class="button" onclick="toggleContent('data-source')">
+                  Data sources
+                </button>
+                <div class="content">
+                  <div class="glass-effect">
+                    <div class="title">Data Sources</div>
+                    <div class="subtitle">
+                      List of data sources that Chatbot will use to answer
+                      requests
+                    </div>
+                    <table>
+                      <tr>
+                        <td colspan="4">
+                          <input
+                            type="checkbox"
+                            id="table2-checkbox1"
+                            onclick="selectAllRows('table2')"
+                          />
+
+                          <!-- Search input and buttons -->
+                          <div style="display: contents; margin-left: 20px">
+                            <input
+                              type="text"
+                              id="table2-searchInput"
+                              placeholder="Search"
+                              oninput="searchRows('table2')"
+                              style="border: none"
+                            />
+                            <button
+                              onclick="searchRows('table2')"
+                              style="
+                                float: right;
+                                border: none;
+                                background-color: white;
+                                margin-inline: 20px;
+                              "
+                            >
+                              Refresh list
+                            </button>
+                            <button
+                              onclick="clearSearch('table2')"
+                              style="
+                                float: right;
+                                border: none;
+                                background-color: white;
+                                margin-inline: 20px;
+                              "
+                            >
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="display: grid">
+                          <label style="text-align: center; color: #585858"
+                            >Looks like you don't have any data sources
+                            yet</label
+                          >
+                          <input
+                            type="file"
+                            id="pdfInput"
+                            name="pdf"
+                            accept=".pdf"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="step2" style="display: none" id="chatbot">
+              <div class="show-chatbot">
+                <div class="chatbot">
+                  <header style="display: flex">
+                    <div class="profile-circle">
+                      <i style="font-size: xx-large" class="fas fa-bolt"></i>
+                    </div>
+                    <div
+                      style="
+                        text-align: left;
+                        margin-left: 22px;
+                        margin-top: -7px;
+                      "
+                    >
+                      <p
+                        style="margin-bottom: -18px; font-weight: 630"
+                        id="chatbot-header-out"
+                      >
+                        AI Assistant
+                      </p>
+                      <p style="font-weight: 100" id="chatbot-subheader-out">
+                        Ask me anything
+                      </p>
+                    </div>
+                    <div>
+                      <i
+                        style="margin: 30px 0 0 100px"
+                        class="fa fa-ellipsis-vertical"
+                      ></i>
+                    </div>
+                    <div>
+                      <i
+                        style="margin: 28px 0 0 25px"
+                        class="fa-solid fa-up-right-and-down-left-from-center"
+                        id="expand-icon"
+                        onclick="expand()"
+                      ></i>
+                    </div>
+                    <div>
+                      <i
+                        onclick="close()"
+                        class="fa-solid fa-xmark"
+                        style="margin: 30px 0 0 23px"
+                      ></i>
+                    </div>
+                  </header>
+                  <ul class="chatbox">
+                    <li class="chat incoming">
+                      <p>Hi there 👋<br />How can I help you today?</p>
+                    </li>
+                  </ul>
+                  <div class="chat-input">
+                    <textarea
+                      placeholder="Enter a message..."
+                      spellcheck="false"
+                      required
+                    ></textarea>
+                    <span id="send-btn" class="material-symbols-rounded"
+                      >send</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="step2" style="display: none;" id="ai-agent">
                         <h2>AI agent Area</h2>
                     </div> -->
-                </div>
-
-            </div>
-            <!-- <div class="right-section-part" id="step3">
+          </div>
+        </div>
+        <!-- <div class="right-section-part" id="step3">
                 <h2>Step 3: Integrate and deploy your chatbot</h2>
                 <button onclick="nextStep()">Confirm</button>
                 <button onclick="previousStep()">Previous</button>
             </div> -->
-        </div>
-
-
+      </div>
     </div>
 
-
     <script>
-        let currentStep = 1;
-        const stepCircles = document.querySelectorAll('.step-circle');
-        const stepList = document.getElementById('stepList');
-        var prebox;
+      var bot_config;
+      var current_access_token = localStorage.getItem('bearer');
+      console.log(current_access_token);
 
-        document.getElementById("live-agent-req").value = "wants to talk to a human";
-        document.getElementById("persona-name").value = "Bot";
-        function toggleContent(boxId) {
-            var button = document.getElementById(boxId).querySelector('.button');
-            button.classList.toggle('rotate');
+      function finishOnboarding() {
+        console.log('finished onboarding - not really');
+      }
 
-            var boxes = document.querySelectorAll('.box');
-            for (var i = 0; i < boxes.length; i++) {
-                var box = boxes[i];
-                if (box.id === boxId) {
-                    box.classList.toggle('open');
-                } else {
-                    box.classList.remove('open');
-                    if (box.id == prebox) document.getElementById(box.id).querySelector('.button').classList.toggle('rotate');
-                }
+      let currentStep = 1;
+      const stepCircles = document.querySelectorAll('.step-circle');
+      const stepList = document.getElementById('stepList');
+      var prebox;
+
+      document.getElementById('live-agent-req').value =
+        'wants to talk to a human';
+      document.getElementById('persona-name').value = 'Bot';
+      function toggleContent(boxId) {
+        var button = document.getElementById(boxId).querySelector('.button');
+        button.classList.toggle('rotate');
+
+        var boxes = document.querySelectorAll('.box');
+        for (var i = 0; i < boxes.length; i++) {
+          var box = boxes[i];
+          if (box.id === boxId) {
+            box.classList.toggle('open');
+          } else {
+            box.classList.remove('open');
+            if (box.id == prebox)
+              document
+                .getElementById(box.id)
+                .querySelector('.button')
+                .classList.toggle('rotate');
+          }
+        }
+        prebox = boxId;
+      }
+
+      function updateStepList() {
+        stepCircles.forEach((circle, index) => {
+          if (currentStep == 1) {
+            if (index == 0) {
+              circle.classList.add('active');
+              circle.classList.remove('complete');
+            } else if (index == 1) {
+              circle.classList.remove('active');
+              circle.classList.remove('complete');
             }
-            prebox = boxId;
-        }
+          } else if (currentStep == 2) {
+            if (index == 0) {
+              circle.classList.add('complete');
+              circle.classList.remove('active');
+            } else if (index == 1) {
+              circle.classList.add('active');
+              circle.classList.remove('complete');
+            }
+          }
+          // if (index < currentStep) {
+          //   circle.classList.add('complete');
+          // } else {
+          //   circle.classList.remove('active');
+          // }
+        });
+      }
 
-        function updateStepList() {
-            stepCircles.forEach((circle, index) => {
-                if (currentStep == 1) {
-                    if (index == 0) {
-                        circle.classList.add('active');
-                        circle.classList.remove('complete');
-                    }
-                    else if (index == 1) {
-                        circle.classList.remove('active');
-                        circle.classList.remove('complete');
-                    }
-                }
-                else if (currentStep == 2) {
-                    if (index == 0) {
-                        circle.classList.add('complete');
-                        circle.classList.remove('active');
-                    }
-                    else if (index == 1) {
-                        circle.classList.add('active');
-                        circle.classList.remove('complete');
-                    }
-                }
-                // if (index < currentStep) {
-                //   circle.classList.add('complete');
-                // } else {
-                //   circle.classList.remove('active');
-                // }
-            });
-        }
+      function goToStep(step) {
+        const currentStepElement = document.getElementById(
+          `step${currentStep}`
+        );
+        currentStepElement.classList.remove('active');
+        currentStep = step;
+        const nextStepElement = document.getElementById(`step${currentStep}`);
+        nextStepElement.classList.add('active');
+        updateStepList();
+      }
 
-        function goToStep(step) {
-            const currentStepElement = document.getElementById(`step${currentStep}`);
-            currentStepElement.classList.remove('active');
-            currentStep = step;
-            const nextStepElement = document.getElementById(`step${currentStep}`);
-            nextStepElement.classList.add('active');
-            updateStepList();
-        }
+      function nextStep() {
+        const currentStepElement = document.getElementById(
+          `step${currentStep}`
+        );
+        currentStepElement.classList.remove('active');
+        currentStep++;
+        const nextStepElement = document.getElementById(`step${currentStep}`);
+        nextStepElement.classList.add('active');
 
-        function nextStep() {
-            const currentStepElement = document.getElementById(`step${currentStep}`);
-            currentStepElement.classList.remove('active');
-            currentStep++;
-            const nextStepElement = document.getElementById(`step${currentStep}`);
-            nextStepElement.classList.add('active');
+        updateStepList();
+      }
 
-            updateStepList();
-
-
-        }
-
-        function previousStep() {
-            const currentStepElement = document.getElementById(`step${currentStep}`);
-            currentStepElement.classList.remove('active');
-            currentStep--;
-            const previousStepElement = document.getElementById(`step${currentStep}`);
-            previousStepElement.classList.add('active');
-
-            updateStepList();
-
-            stepList.classList.remove('check-mark');
-        }
+      function previousStep() {
+        const currentStepElement = document.getElementById(
+          `step${currentStep}`
+        );
+        currentStepElement.classList.remove('active');
+        currentStep--;
+        const previousStepElement = document.getElementById(
+          `step${currentStep}`
+        );
+        previousStepElement.classList.add('active');
 
         updateStepList();
 
-        function showDetail(detailId) {
-            // if (detailId == "chatbot") {
-            //     document.getElementById(detailId).style.display = "block";
-            //     document.getElementById("ai-agent").style.display = "none";
+        stepList.classList.remove('check-mark');
+      }
 
-            // } else {
-            //     document.getElementById(detailId).style.display = "block";
-            //     document.getElementById("chatbot").style.display = "none";
-            // }
-            document.getElementById("chatbot").style.display = "block";
-            var details = document.getElementsByClassName("detail");
-            for (var i = 0; i < details.length; i++) {
-                details[i].classList.remove("open");
+      updateStepList();
+
+      function showDetail(detailId) {
+        // if (detailId == "chatbot") {
+        //     document.getElementById(detailId).style.display = "block";
+        //     document.getElementById("ai-agent").style.display = "none";
+
+        // } else {
+        //     document.getElementById(detailId).style.display = "block";
+        //     document.getElementById("chatbot").style.display = "none";
+        // }
+        document.getElementById('chatbot').style.display = 'block';
+        var details = document.getElementsByClassName('detail');
+        for (var i = 0; i < details.length; i++) {
+          details[i].classList.remove('open');
+        }
+
+        var detail = document.getElementById(detailId + '-detail');
+        detail.classList.add('open');
+      }
+
+      function showPreview(detailId) {
+        var previews = document.getElementsByClassName('preview');
+        for (var i = 0; i < previews.length; i++) {
+          previews[i].classList.remove('open');
+        }
+
+        var preview = document.getElementById(detailId);
+        preview.classList.add('open');
+      }
+
+      function showAnswer(detailId) {
+        var previews = document.getElementsByClassName('answer');
+        for (var i = 0; i < previews.length; i++) {
+          previews[i].classList.remove('open');
+        }
+
+        var preview = document.getElementById(detailId);
+        preview.classList.add('open');
+      }
+
+      function showCreativity(detailId) {
+        var previews = document.getElementsByClassName('creativity');
+        for (var i = 0; i < previews.length; i++) {
+          previews[i].classList.remove('open');
+        }
+
+        var preview = document.getElementById(detailId);
+        preview.classList.add('open');
+      }
+
+      var profileCircle = document.querySelector('.profile-circle');
+      var iconprofileCircle = document.querySelector('.profile-circle i');
+      function handleImageUpload(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        var avatarPreview = document.querySelector('.avatar-preview');
+
+        reader.onload = function (e) {
+          avatarPreview.style.backgroundImage = `url(${e.target.result})`;
+          profileCircle.style.backgroundImage = `url(${e.target.result})`;
+          iconprofileCircle.style.display = 'none';
+        };
+
+        reader.readAsDataURL(file);
+      }
+
+      var colorCircle = document.querySelector('.icon-circle');
+      var iconcolorcircle = document.querySelector('.icon-circle i');
+      function handleIconUpload(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        var avatarPreview = document.querySelector('.icon-preview');
+
+        reader.onload = function (e) {
+          avatarPreview.style.backgroundImage = `url(${e.target.result})`;
+          colorCircle.style.backgroundImage = `url(${e.target.result})`;
+          iconcolorcircle.style.display = 'none';
+        };
+
+        reader.readAsDataURL(file);
+      }
+
+      function resetAvatar() {
+        var avatarPreview = document.querySelector('.avatar-preview');
+        avatarPreview.style.backgroundImage = '';
+        document.getElementById('image-upload').value = '';
+        profileCircle.style.backgroundImage = '';
+        iconprofileCircle.style.display = 'block';
+      }
+
+      function resetIcon() {
+        var avatarPreview = document.querySelector('.icon-preview');
+        avatarPreview.style.backgroundImage = '';
+        document.getElementById('icon-upload').value = '';
+        colorCircle.style.backgroundImage = '';
+        iconcolorcircle.style.display = 'block';
+      }
+
+      function changeAvatarColor(event) {
+        var color = event.target.value;
+        colorCircle.style.backgroundColor = color;
+        var colorheader = document.querySelector('.chatbot header');
+        colorheader.style.background = color;
+        var chatcolor = document.querySelector('.chatbox .outgoing p');
+        chatcolor.style.background = color;
+      }
+
+      function hideExpand() {
+        var hid = document.getElementsByClassName('glass-effect-hide');
+        for (var i = 0; i < hid.length; i++) {
+          hid[i].classList.toggle('hidden');
+        }
+        var hidd = document.getElementsByClassName('label-hide');
+        for (var i = 0; i < hidd.length; i++) {
+          hidd[i].classList.toggle('hidden');
+        }
+        if (icon.style.display === 'none') {
+          icon.style.display = 'block';
+        } else {
+          icon.style.display = 'none';
+        }
+      }
+
+      function toggleStatus(button) {
+        button.classList.toggle('on');
+
+        var status = button.classList.contains('on') ? 'on' : 'off';
+        var buttonId = button.id;
+        // Send status to the server
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('POST', '/status', true);
+        // xhr.setRequestHeader('Content-Type', 'application/json');
+        // xhr.onreadystatechange = function () {
+        //   if (xhr.readyState === 4 && xhr.status === 200) {
+        //     console.log('Status sent to the server successfully.');
+        //   }
+        // };
+        // xhr.send(JSON.stringify({ id: buttonId, status: status }));
+      }
+
+      const sliderThumb = document.getElementById('slider-thumb');
+      const sliderTrack = document.getElementById('slider-track');
+      const slider = document.querySelector('.slider');
+      const sliderValue = document.getElementById('slider-value');
+
+      sliderThumb.addEventListener('mousedown', startDrag);
+      sliderThumb.addEventListener('touchstart', startDrag);
+      slider.addEventListener('click', moveThumb);
+
+      function startDrag(event) {
+        event.preventDefault();
+
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('touchmove', drag);
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
+      }
+
+      function drag(event) {
+        const sliderRect = slider.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
+        const offsetX = event.clientX || event.touches[0].clientX;
+        const position = Math.max(
+          0,
+          Math.min(1, (offsetX - sliderRect.left) / sliderWidth)
+        );
+
+        const thumbPosition = position * 100;
+        sliderThumb.style.left = `${thumbPosition}%`;
+        sliderTrack.style.width = `${thumbPosition}%`;
+
+        const value = position.toFixed(2); // Get the value rounded to 2 decimal places
+        sliderValue.innerText = value; // Display the value
+      }
+
+      function stopDrag() {
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('touchmove', drag);
+        document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchend', stopDrag);
+      }
+
+      function moveThumb(event) {
+        const sliderRect = slider.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
+        const offsetX = event.clientX || event.touches[0].clientX;
+        const position = Math.max(
+          0,
+          Math.min(1, (offsetX - sliderRect.left) / sliderWidth)
+        );
+
+        const thumbPosition = position * 100;
+        sliderThumb.style.left = `${thumbPosition}%`;
+        sliderTrack.style.width = `${thumbPosition}%`;
+
+        const value = position.toFixed(2); // Get the value rounded to 2 decimal places
+        sliderValue.innerText = value; // Display the value
+      }
+
+      function selectAllRows(tableId) {
+        var checkboxes = document.querySelectorAll(
+          '#' + tableId + ' input[type=checkbox]'
+        );
+        var selectAllCheckbox = document.getElementById(tableId + '-checkbox1');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = selectAllCheckbox.checked;
+        }
+      }
+
+      function searchRows(tableId) {
+        var input = document.getElementById(tableId + '-searchInput');
+        var filter = input.value.toUpperCase();
+        var table = document.getElementById(tableId + '-data-table');
+        var rows = table.getElementsByTagName('tr');
+
+        for (var i = 0; i < rows.length; i++) {
+          var dataCells = rows[i].getElementsByTagName('td');
+          var display = false;
+
+          for (var j = 0; j < dataCells.length; j++) {
+            var cell = dataCells[j];
+            if (cell) {
+              var cellText = cell.innerText || cell.textContent;
+              if (cellText.toUpperCase().indexOf(filter) > -1) {
+                display = true;
+                break;
+              }
             }
+          }
 
-            var detail = document.getElementById(detailId + "-detail");
-            detail.classList.add("open");
+          rows[i].style.display = display ? '' : 'none';
         }
+      }
 
-        function showPreview(detailId) {
-            var previews = document.getElementsByClassName("preview");
-            for (var i = 0; i < previews.length; i++) {
-                previews[i].classList.remove("open");
-            }
+      function clearSearch(tableId) {
+        var input = document.getElementById(tableId + '-searchInput');
+        input.value = '';
+        searchRows(tableId);
+      }
 
-            var preview = document.getElementById(detailId);
-            preview.classList.add("open");
+      /////////////////////////////////////
+      const chatbox = document.querySelector('.chatbox');
+      const chatInput = document.querySelector('.chat-input textarea');
+      const sendChatBtn = document.querySelector('.chat-input span');
+
+      let userMessage = null; // Variable to store user's message
+      const API_KEY = 'PASTE-YOUR-API-KEY'; // Paste your API key here
+      const inputInitHeight = chatInput.scrollHeight;
+
+      const createChatLi = (message, className) => {
+        // Create a chat <li> element with passed message and className
+        const chatLi = document.createElement('li');
+        chatLi.classList.add('chat', `${className}`);
+        let chatContent = className === 'outgoing' ? `<p></p>` : `<p></p>`;
+        chatLi.innerHTML = chatContent;
+        chatLi.querySelector('p').textContent = message;
+        return chatLi; // return chat <li> element
+      };
+
+      const generateResponse = (chatElement) => {
+        const API_URL = 'https://api.openai.com/v1/chat/completions';
+        const messageElement = chatElement.querySelector('p');
+
+        // Define the properties and message for the API request
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [{ role: 'user', content: userMessage }],
+          }),
+        };
+
+        // Send POST request to API, get response and set the reponse as paragraph text
+        fetch(API_URL, requestOptions)
+          .then((res) => res.json())
+          .then((data) => {
+            messageElement.textContent = data.choices[0].message.content.trim();
+          })
+          .catch(() => {
+            messageElement.classList.add('error');
+            messageElement.textContent =
+              'Oops! Something went wrong. Please try again.';
+          })
+          .finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+      };
+
+      const handleChat = () => {
+        userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
+        if (!userMessage) return;
+
+        // Clear the input textarea and set its height to default
+        chatInput.value = '';
+        chatInput.style.height = `${inputInitHeight}px`;
+
+        // Append the user's message to the chatbox
+        chatbox.appendChild(createChatLi(userMessage, 'outgoing'));
+        chatbox.scrollTo(0, chatbox.scrollHeight);
+
+        setTimeout(() => {
+          // Display "Thinking..." message while waiting for the response
+          const incomingChatLi = createChatLi('Thinking...', 'incoming');
+          chatbox.appendChild(incomingChatLi);
+          chatbox.scrollTo(0, chatbox.scrollHeight);
+          generateResponse(incomingChatLi);
+        }, 600);
+      };
+
+      chatInput.addEventListener('input', () => {
+        // Adjust the height of the input textarea based on its content
+        chatInput.style.height = `${inputInitHeight}px`;
+        chatInput.style.height = `${chatInput.scrollHeight}px`;
+      });
+
+      chatInput.addEventListener('keydown', (e) => {
+        // If Enter key is pressed without Shift key and the window
+        // width is greater than 800px, handle the chat
+        if (e.key === 'Enter' && !e.shiftKey && window.innerWidth > 800) {
+          e.preventDefault();
+          handleChat();
         }
+      });
 
-        function showAnswer(detailId) {
-            var previews = document.getElementsByClassName("answer");
-            for (var i = 0; i < previews.length; i++) {
-                previews[i].classList.remove("open");
-            }
+      document.getElementById('chatbot-header').value = 'AI Assistant';
+      function updateheader() {
+        var inputText = document.getElementById('chatbot-header').value;
+        var outputParagraph = document.getElementById('chatbot-header-out');
+        outputParagraph.textContent = inputText;
+      }
 
-            var preview = document.getElementById(detailId);
-            preview.classList.add("open");
+      document.getElementById('chatbot-subheader').value = 'Ask me anything';
+      function updatesubheader() {
+        var inputText = document.getElementById('chatbot-subheader').value;
+        var outputParagraph = document.getElementById('chatbot-subheader-out');
+        outputParagraph.textContent = inputText;
+      }
+
+      var icon = document.getElementById('expand-icon');
+      function expand() {
+        if (icon.classList.contains('fa-up-right-and-down-left-from-center')) {
+          icon.classList.remove(
+            'fa-solid',
+            'fa-up-right-and-down-left-from-center'
+          );
+          icon.classList.add('fa-solid', 'fa-down-left-and-up-right-to-center');
+
+          var inputwidth = document.getElementById('expand-width').value;
+          document.querySelector(
+            '.show-chatbot .chatbot'
+          ).style.width = `${inputwidth}px`;
+
+          var inputheight = document.getElementById('expand-height').value;
+          document.querySelector(
+            '.show-chatbot .chatbot'
+          ).style.height = `${inputheight}px`;
+        } else {
+          icon.classList.remove(
+            'fa-solid',
+            'fa-down-left-and-up-right-to-center'
+          );
+          icon.classList.add(
+            'fa-solid',
+            'fa-up-right-and-down-left-from-center'
+          );
+
+          var inputwidth = document.getElementById('default-width').value;
+          document.querySelector(
+            '.show-chatbot .chatbot'
+          ).style.width = `${inputwidth}px`;
+
+          var inputheight = document.getElementById('default-height').value;
+          document.querySelector(
+            '.show-chatbot .chatbot'
+          ).style.height = `${inputheight}px`;
         }
+      }
 
-        function showCreativity(detailId) {
-            var previews = document.getElementsByClassName("creativity");
-            for (var i = 0; i < previews.length; i++) {
-                previews[i].classList.remove("open");
-            }
+      function change_width() {
+        var inputwidth = document.getElementById('default-width').value;
+        document.querySelector(
+          '.show-chatbot .chatbot'
+        ).style.width = `${inputwidth}px`;
+      }
 
-            var preview = document.getElementById(detailId);
-            preview.classList.add("open");
+      function change_height() {
+        var inputheight = document.getElementById('default-height').value;
+        document.querySelector(
+          '.show-chatbot .chatbot'
+        ).style.height = `${inputheight}px`;
+      }
+
+      function close() {
+        document.getElementById('chatbot').style.display = 'none';
+        var details = document.getElementsByClassName('detail');
+        for (var i = 0; i < details.length; i++) {
+          details[i].classList.remove('open');
         }
+      }
 
-        var profileCircle = document.querySelector(".profile-circle");
-        var iconprofileCircle = document.querySelector(".profile-circle i");
-        function handleImageUpload(event) {
-            var file = event.target.files[0];
-            var reader = new FileReader();
-            var avatarPreview = document.querySelector(".avatar-preview");
+      // Assuming you have jQuery library included in your project
 
-            reader.onload = function (e) {
-                avatarPreview.style.backgroundImage = `url(${e.target.result})`;
-                profileCircle.style.backgroundImage = `url(${e.target.result})`;
-                iconprofileCircle.style.display = 'none';
-            };
+      // Event listener for submit button click
+      $('#submitButton').click(function (e) {
+        e.preventDefault();
 
-            reader.readAsDataURL(file);
-        }
-
-
-        var colorCircle = document.querySelector(".icon-circle");
-        var iconcolorcircle = document.querySelector(".icon-circle i");
-        function handleIconUpload(event) {
-            var file = event.target.files[0];
-            var reader = new FileReader();
-            var avatarPreview = document.querySelector(".icon-preview");
-
-            reader.onload = function (e) {
-                avatarPreview.style.backgroundImage = `url(${e.target.result})`;
-                colorCircle.style.backgroundImage = `url(${e.target.result})`;
-                iconcolorcircle.style.display = 'none';
-            };
-
-            reader.readAsDataURL(file);
-        }
-
-        function resetAvatar() {
-            var avatarPreview = document.querySelector(".avatar-preview");
-            avatarPreview.style.backgroundImage = "";
-            document.getElementById("image-upload").value = "";
-            profileCircle.style.backgroundImage = "";
-            iconprofileCircle.style.display = 'block';
-        }
-
-        function resetIcon() {
-            var avatarPreview = document.querySelector(".icon-preview");
-            avatarPreview.style.backgroundImage = "";
-            document.getElementById("icon-upload").value = "";
-            colorCircle.style.backgroundImage = "";
-            iconcolorcircle.style.display = 'block';
-        }
-
-        function changeAvatarColor(event) {
-            var color = event.target.value;
-            colorCircle.style.backgroundColor = color;
-            var colorheader = document.querySelector(".chatbot header");
-            colorheader.style.background = color;
-            var chatcolor = document.querySelector(".chatbox .outgoing p");
-            chatcolor.style.background = color;
-        }
-
-        function hideExpand() {
-            var hid = document.getElementsByClassName("glass-effect-hide");
-            for (var i = 0; i < hid.length; i++) {
-                hid[i].classList.toggle("hidden");
-            }
-            var hidd = document.getElementsByClassName("label-hide");
-            for (var i = 0; i < hidd.length; i++) {
-                hidd[i].classList.toggle("hidden");
-            }
-            if (icon.style.display === "none") {
-                icon.style.display = "block";
-            } else {
-                icon.style.display = "none";
-            }
-        }
-
-        function toggleStatus(button) {
-            button.classList.toggle('on');
-
-            var status = button.classList.contains('on') ? 'on' : 'off';
-            var buttonId = button.id;
-            // Send status to the server
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('POST', '/status', true);
-            // xhr.setRequestHeader('Content-Type', 'application/json');
-            // xhr.onreadystatechange = function () {
-            //   if (xhr.readyState === 4 && xhr.status === 200) {
-            //     console.log('Status sent to the server successfully.');
-            //   }
-            // };
-            // xhr.send(JSON.stringify({ id: buttonId, status: status }));
-        }
-
-        const sliderThumb = document.getElementById("slider-thumb");
-        const sliderTrack = document.getElementById("slider-track");
-        const slider = document.querySelector(".slider");
-        const sliderValue = document.getElementById("slider-value");
-
-        sliderThumb.addEventListener("mousedown", startDrag);
-        sliderThumb.addEventListener("touchstart", startDrag);
-        slider.addEventListener("click", moveThumb);
-
-        function startDrag(event) {
-            event.preventDefault();
-
-            document.addEventListener("mousemove", drag);
-            document.addEventListener("touchmove", drag);
-            document.addEventListener("mouseup", stopDrag);
-            document.addEventListener("touchend", stopDrag);
-        }
-
-        function drag(event) {
-            const sliderRect = slider.getBoundingClientRect();
-            const sliderWidth = sliderRect.width;
-            const offsetX = event.clientX || event.touches[0].clientX;
-            const position = Math.max(0, Math.min(1, (offsetX - sliderRect.left) / sliderWidth));
-
-            const thumbPosition = position * 100;
-            sliderThumb.style.left = `${thumbPosition}%`;
-            sliderTrack.style.width = `${thumbPosition}%`;
-
-            const value = position.toFixed(2); // Get the value rounded to 2 decimal places
-            sliderValue.innerText = value; // Display the value
-        }
-
-        function stopDrag() {
-            document.removeEventListener("mousemove", drag);
-            document.removeEventListener("touchmove", drag);
-            document.removeEventListener("mouseup", stopDrag);
-            document.removeEventListener("touchend", stopDrag);
-        }
-
-        function moveThumb(event) {
-            const sliderRect = slider.getBoundingClientRect();
-            const sliderWidth = sliderRect.width;
-            const offsetX = event.clientX || event.touches[0].clientX;
-            const position = Math.max(0, Math.min(1, (offsetX - sliderRect.left) / sliderWidth));
-
-            const thumbPosition = position * 100;
-            sliderThumb.style.left = `${thumbPosition}%`;
-            sliderTrack.style.width = `${thumbPosition}%`;
-
-            const value = position.toFixed(2); // Get the value rounded to 2 decimal places
-            sliderValue.innerText = value; // Display the value
-        }
-
-        function selectAllRows(tableId) {
-            var checkboxes = document.querySelectorAll("#" + tableId + " input[type=checkbox]");
-            var selectAllCheckbox = document.getElementById(tableId + "-checkbox1");
-
-            for (var i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = selectAllCheckbox.checked;
-            }
-        }
-
-        function searchRows(tableId) {
-            var input = document.getElementById(tableId + "-searchInput");
-            var filter = input.value.toUpperCase();
-            var table = document.getElementById(tableId + "-data-table");
-            var rows = table.getElementsByTagName("tr");
-
-            for (var i = 0; i < rows.length; i++) {
-                var dataCells = rows[i].getElementsByTagName("td");
-                var display = false;
-
-                for (var j = 0; j < dataCells.length; j++) {
-                    var cell = dataCells[j];
-                    if (cell) {
-                        var cellText = cell.innerText || cell.textContent;
-                        if (cellText.toUpperCase().indexOf(filter) > -1) {
-                            display = true;
-                            break;
-                        }
-                    }
-                }
-
-                rows[i].style.display = display ? "" : "none";
-            }
-        }
-
-        function clearSearch(tableId) {
-            var input = document.getElementById(tableId + "-searchInput");
-            input.value = "";
-            searchRows(tableId);
-        }
-
-        /////////////////////////////////////
-        const chatbox = document.querySelector(".chatbox");
-        const chatInput = document.querySelector(".chat-input textarea");
-        const sendChatBtn = document.querySelector(".chat-input span");
-
-        let userMessage = null; // Variable to store user's message
-        const API_KEY = "PASTE-YOUR-API-KEY"; // Paste your API key here
-        const inputInitHeight = chatInput.scrollHeight;
-
-        const createChatLi = (message, className) => {
-            // Create a chat <li> element with passed message and className
-            const chatLi = document.createElement("li");
-            chatLi.classList.add("chat", `${className}`);
-            let chatContent = className === "outgoing" ? `<p></p>` : `<p></p>`;
-            chatLi.innerHTML = chatContent;
-            chatLi.querySelector("p").textContent = message;
-            return chatLi; // return chat <li> element
-        }
-
-        const generateResponse = (chatElement) => {
-            const API_URL = "https://api.openai.com/v1/chat/completions";
-            const messageElement = chatElement.querySelector("p");
-
-            // Define the properties and message for the API request
-            const requestOptions = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: "gpt-3.5-turbo",
-                    messages: [{ role: "user", content: userMessage }],
-                })
-            }
-
-            // Send POST request to API, get response and set the reponse as paragraph text
-            fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-                messageElement.textContent = data.choices[0].message.content.trim();
-            }).catch(() => {
-                messageElement.classList.add("error");
-                messageElement.textContent = "Oops! Something went wrong. Please try again.";
-            }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-        }
-
-        const handleChat = () => {
-            userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
-            if (!userMessage) return;
-
-            // Clear the input textarea and set its height to default
-            chatInput.value = "";
-            chatInput.style.height = `${inputInitHeight}px`;
-
-            // Append the user's message to the chatbox
-            chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-            chatbox.scrollTo(0, chatbox.scrollHeight);
-
-            setTimeout(() => {
-                // Display "Thinking..." message while waiting for the response
-                const incomingChatLi = createChatLi("Thinking...", "incoming");
-                chatbox.appendChild(incomingChatLi);
-                chatbox.scrollTo(0, chatbox.scrollHeight);
-                generateResponse(incomingChatLi);
-            }, 600);
-        }
-
-        chatInput.addEventListener("input", () => {
-            // Adjust the height of the input textarea based on its content
-            chatInput.style.height = `${inputInitHeight}px`;
-            chatInput.style.height = `${chatInput.scrollHeight}px`;
+        var about_test = $('#first-step-about').val();
+        var nameInput = $('#nameInput').val();
+        var chatbot_button = $('#chatbot-button');
+        var ai_agent_button = $('#ai-agent-button');
+        var chatbotType = null;
+        chatbot_button.on('click', function () {
+          chatbotType = chatbot_button;
+        });
+        ai_agent_button.on('click', function () {
+          chatbotType = ai_agent_button;
         });
 
-        chatInput.addEventListener("keydown", (e) => {
-            // If Enter key is pressed without Shift key and the window 
-            // width is greater than 800px, handle the chat
-            if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
-                e.preventDefault();
-                handleChat();
-            }
+        var avatarPicture = $('#image-upload');
+        var avatar = null;
+        avatarPicture.on('change', function (event) {
+          avatar = event.target.files[0];
         });
 
-        document.getElementById("chatbot-header").value = "AI Assistant";
-        function updateheader() {
-            var inputText = document.getElementById("chatbot-header").value;
-            var outputParagraph = document.getElementById("chatbot-header-out");
-            outputParagraph.textContent = inputText;
-        }
-
-        document.getElementById("chatbot-subheader").value = "Ask me anything";
-        function updatesubheader() {
-            var inputText = document.getElementById("chatbot-subheader").value;
-            var outputParagraph = document.getElementById("chatbot-subheader-out");
-            outputParagraph.textContent = inputText;
-        }
-
-        var icon = document.getElementById("expand-icon");
-        function expand() {
-            if (icon.classList.contains("fa-up-right-and-down-left-from-center")) {
-                icon.classList.remove("fa-solid", "fa-up-right-and-down-left-from-center");
-                icon.classList.add("fa-solid", "fa-down-left-and-up-right-to-center");
-
-                var inputwidth = document.getElementById("expand-width").value;
-                document.querySelector(".show-chatbot .chatbot").style.width = `${inputwidth}px`;
-
-                var inputheight = document.getElementById("expand-height").value;
-                document.querySelector(".show-chatbot .chatbot").style.height = `${inputheight}px`;
-            } else {
-                icon.classList.remove("fa-solid", "fa-down-left-and-up-right-to-center");
-                icon.classList.add("fa-solid", "fa-up-right-and-down-left-from-center");
-
-                var inputwidth = document.getElementById("default-width").value;
-                document.querySelector(".show-chatbot .chatbot").style.width = `${inputwidth}px`;
-
-                var inputheight = document.getElementById("default-height").value;
-                document.querySelector(".show-chatbot .chatbot").style.height = `${inputheight}px`;
-            }
-        }
-
-        function change_width() {
-            var inputwidth = document.getElementById("default-width").value;
-            document.querySelector(".show-chatbot .chatbot").style.width = `${inputwidth}px`;
-        }
-
-        function change_height() {
-            var inputheight = document.getElementById("default-height").value;
-            document.querySelector(".show-chatbot .chatbot").style.height = `${inputheight}px`;
-        }
-
-        function close() {
-            document.getElementById("chatbot").style.display = "none";
-            var details = document.getElementsByClassName("detail");
-            for (var i = 0; i < details.length; i++) {
-                details[i].classList.remove("open");
-            }
-        }
-
-
-        // Assuming you have jQuery library included in your project
-
-        // Event listener for submit button click
-        $('#submit-button').click(function (e) {
-            e.preventDefault();
-
-            var about_test = $('#first-step-about').val();
-            var nameInput = $('#nameInput').val();
-            var chatbot_button = $('#chatbot-button');
-            var ai_agent_button = $('#ai-agent-button');
-            var chatbotType = null;
-            chatbot_button.on('click', function () {
-                chatbotType = chatbot_button;
-            });
-            ai_agent_button.on('click', function () {
-                chatbotType = ai_agent_button;
-            });
-
-            var avatarPicture = $('#image-upload');
-            var avatar = null;
-            avatarPicture.on('change', function (event) {
-                avatar = event.target.files[0];
-            });
-
-            var iconPicture = $('#icon-upload');
-            var iconpic = null;
-            iconPicture.on('change', function (event) {
-                iconpic = event.target.files[0];
-            });
-
-            var color = $('#color-picker').val();
-            var header = $('#chatbot-header').val();
-            var subheader = $('#chatbot-subheader').val();
-
-            var unit_select_dfw = $('#unit-selector-dfw').val();
-            var unit_select_exw = $('#unit-selector-exw').val();
-            var unit_select_dfh = $('#unit-selector-dfh').val();
-            var unit_select_exh = $('#unit-selector-exh').val();
-
-            var default_width = $('#default-width').val() + unit_select_dfw;
-            var expand_width = $('#expand-width').val() + unit_select_exw;
-            var default_height = $('#default-height').val() + unit_select_dfh;
-            var expand_height = $('#expand-height').val() + unit_select_exh;
-            var width = null;
-            var height = null;
-            if (icon.style.display === "none"  || icon.classList.contains("fa-up-right-and-down-left-from-center")) {
-                width = default_width;
-                height = default_height;
-            }
-            else {
-                width = expand_width;
-                height = expand_height;
-            }
-
-            var email = $('#email').val();
-            var send_notif = null;
-            if(document.getElementById('send-notif').classList('toggle-button on')){
-                send_notif = true;
-            }
-            else {
-                send_notif = false;
-            }
-            var live_agent_req = $('#live-agent-req').val();
-
-            var send_transcripts = null;
-            if(document.getElementById('send-transcripts').classList('toggle-button on')){
-                send_transcripts = true;
-            }
-            else {
-                send_transcripts = false;
-            }
-
-            var summary = null;
-            if(document.getElementById('show-summary').classList('toggle-button on')){
-                summary = true;
-            }
-            else {
-                summary = false;
-            }
-
-            var unresolved_req = null;
-            if(document.getElementById('unresolved-req').classList('toggle-button on')){
-                unresolved_req = true;
-            }
-            else {
-                unresolved_req = false;
-            }
-
-            var ask_name = null;
-            if(document.getElementById('ask-name').classList('toggle-button on')){
-                ask_name = true;
-            }
-            else {
-                ask_name = false;
-            }
-
-            var ask_feedback = null;
-            if(document.getElementById('ask-feedback').classList('toggle-button on')){
-                ask_feedback = true;
-            }
-            else {
-                ask_feedback = false;
-            }
-
-            var welcomeMessages = $('#welcomeMessages').val();
-            var popupMessages = $('#popupMessages').val();
-            var conversationStarters = $('#conversationStarters').val();
-            var fallbackResponse = $('#fallbackResponse').val();
-            var liveAgentAcknowledgeMessage = $('#liveAgentAcknowledgeMessage').val();
-            var liveAgentWaitMessage = $('#liveAgentWaitMessage').val();
-            var liveAgentLeftMessage = $('#liveAgentLeftMessage').val();
-            var company_name = $('#company-name').val();
-            var business_website = $('#business-website').val();
-            var persona_name = $('#persona-name').val();
-            var customPrompt = $('#customPrompt').val();
-            var temperature = $('#slider-value').text();
-
-            var short_answer= $('#show-short-answer');
-            var balanced_answer = $('#show-balanced-answer');
-            var detailed_answer = $('#show-detailed-answer');
-            var response_style = null;
-            short_answer.on('click', function () {
-                response_style = short_answer;
-            });
-            balanced_answer.on('click', function () {
-                response_style = balanced_answer;
-            });
-            detailed_answer.on('click', function () {
-                response_style = detailed_answer;
-            });
-
-
-            var cre_very_low = $('#cre-very-low');
-            var cre_low = $('#cre-low');
-            var cre_medium = $('#cre-medium');
-            var cre_high = $('#cre-high');
-            var Creativity = null;
-            cre_very_low.on('click', function () {
-                Creativity = cre_very_low;
-            });
-            cre_low.on('click', function () {
-                Creativity = cre_low;
-            });
-            cre_medium.on('click', function () {
-                Creativity = cre_medium;
-            });
-            cre_high.on('click', function () {
-                Creativity = cre_high;
-            });
-
-            // Create a form data object
-            var formData = new FormData();
-            formData.append("About-Test", about_test);
-            formData.append("Name", nameInput);
-            formData.append("Chatbot-Type", chatbotType);
-            formData.append("Avatar", avatar);
-            formData.append("Icon", iconpic);
-            formData.append("Color", color);
-            formData.append("Header", header);
-            formData.append("Subheader", subheader);
-            formData.append("Width", width);
-            formData.append("Height", height);
-            formData.append("Email", email);
-            formData.append("Send-Notification", JSON.stringify(send_notif));
-            formData.append("Live-Agent-Request", live_agent_req);
-            formData.append("Send-Transcripts", JSON.stringify(send_transcripts));
-            formData.append("Summary", JSON.stringify(summary));
-            formData.append("Unsolved-Request", JSON.stringify(unresolved_req));
-            formData.append("Ask-name", JSON.stringify(ask_name));
-            formData.append("Ask-feedback", JSON.stringify(ask_feedback));
-            formData.append("WelcomeMessages", welcomeMessages);
-            formData.append("PopupMessages", popupMessages);
-            formData.append("ConversationStarters", conversationStarters);
-            formData.append("FallbackResponse", fallbackResponse);
-            formData.append("LiveAgentAcknowledgeMessage", liveAgentAcknowledgeMessage);
-            formData.append("LiveAgentWaitMessage", liveAgentWaitMessage);
-            formData.append("LiveAgentLeftMessage", liveAgentLeftMessage);
-            formData.append("Company-Name", company_name);
-            formData.append("Business-Website", business_website);
-            formData.append("Persona-Name", persona_name);
-            formData.append("CustomPrompt", customPrompt);
-            formData.append("Temperature", JSON.stringify(temperature));
-            formData.append("Response-Style", response_style);
-            formData.append("Creativity", creativity);
-
-
-            // Send the form data to the backend using AJAX
-            $.ajax({
-                url: "backend-url", // Replace with your backend endpoint URL
-                method: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    // Handle the response from the backend
-                    console.log("Data sent successfully");
-                },
-                error: function (error) {
-                    // Handle any errors that occur during the AJAX request
-                    console.error("Error:", error);
-                }
-            });
+        var iconPicture = $('#icon-upload');
+        var iconpic = null;
+        iconPicture.on('change', function (event) {
+          iconpic = event.target.files[0];
         });
 
+        var color = $('#color-picker').val();
+        var header = $('#chatbot-header').val();
+        var subheader = $('#chatbot-subheader').val();
+
+        var unit_select_dfw = $('#unit-selector-dfw').val();
+        var unit_select_exw = $('#unit-selector-exw').val();
+        var unit_select_dfh = $('#unit-selector-dfh').val();
+        var unit_select_exh = $('#unit-selector-exh').val();
+
+        var default_width = $('#default-width').val() + unit_select_dfw;
+        var expand_width = $('#expand-width').val() + unit_select_exw;
+        var default_height = $('#default-height').val() + unit_select_dfh;
+        var expand_height = $('#expand-height').val() + unit_select_exh;
+        var width = null;
+        var height = null;
+        if (
+          icon.style.display === 'none' ||
+          icon.classList.contains('fa-up-right-and-down-left-from-center')
+        ) {
+          width = default_width;
+          height = default_height;
+        } else {
+          width = expand_width;
+          height = expand_height;
+        }
+
+        var email = $('#email').val();
+        var send_notif = null;
+        if (
+          document
+            .getElementById('send-notif')
+            .classList.contains('toggle-button on')
+        ) {
+          send_notif = true;
+        } else {
+          send_notif = false;
+        }
+        var live_agent_req = $('#live-agent-req').val();
+
+        var send_transcripts = null;
+        if (
+          document
+            .getElementById('send-transcripts')
+            .classList.contains('toggle-button on')
+        ) {
+          send_transcripts = true;
+        } else {
+          send_transcripts = false;
+        }
+
+        var summary = null;
+        if (
+          document
+            .getElementById('show-summary')
+            .classList.contains('toggle-button on')
+        ) {
+          summary = true;
+        } else {
+          summary = false;
+        }
+
+        var unresolved_req = null;
+        if (
+          document
+            .getElementById('unresolved-req')
+            .classList.contains('toggle-button on')
+        ) {
+          unresolved_req = true;
+        } else {
+          unresolved_req = false;
+        }
+
+        var ask_name = null;
+        if (
+          document
+            .getElementById('ask-name')
+            .classList.contains('toggle-button on')
+        ) {
+          ask_name = true;
+        } else {
+          ask_name = false;
+        }
+
+        var ask_feedback = null;
+        if (
+          document
+            .getElementById('ask-feedback')
+            .classList.contains('toggle-button on')
+        ) {
+          ask_feedback = true;
+        } else {
+          ask_feedback = false;
+        }
+
+        var welcomeMessages = $('#welcomeMessages').val();
+        var popupMessages = $('#popupMessages').val();
+        var conversationStarters = $('#conversationStarters').val();
+        var fallbackResponse = $('#fallbackResponse').val();
+        var liveAgentAcknowledgeMessage = $(
+          '#liveAgentAcknowledgeMessage'
+        ).val();
+        var liveAgentWaitMessage = $('#liveAgentWaitMessage').val();
+        var liveAgentLeftMessage = $('#liveAgentLeftMessage').val();
+        var company_name = $('#company-name').val();
+        var business_website = $('#business-website').val();
+        var persona_name = $('#persona-name').val();
+        var customPrompt = $('#customPrompt').val();
+        var temperature = $('#slider-value').text();
+
+        var short_answer = $('#show-short-answer');
+        var balanced_answer = $('#show-balanced-answer');
+        var detailed_answer = $('#show-detailed-answer');
+        var response_style = null;
+        short_answer.on('click', function () {
+          response_style = short_answer;
+        });
+        balanced_answer.on('click', function () {
+          response_style = balanced_answer;
+        });
+        detailed_answer.on('click', function () {
+          response_style = detailed_answer;
+        });
+
+        var cre_very_low = $('#cre-very-low');
+        var cre_low = $('#cre-low');
+        var cre_medium = $('#cre-medium');
+        var cre_high = $('#cre-high');
+        var creativity = null;
+        cre_very_low.on('click', function () {
+          creativity = cre_very_low;
+        });
+        cre_low.on('click', function () {
+          creativity = cre_low;
+        });
+        cre_medium.on('click', function () {
+          creativity = cre_medium;
+        });
+        cre_high.on('click', function () {
+          creativity = cre_high;
+        });
+
+        // Create a form data object
+        // var formData = new FormData();
+        // formData.append('About-Test', about_test);
+        // formData.append('Name', nameInput);
+        // formData.append('Chatbot-Type', chatbotType);
+        // formData.append('Avatar', avatar);
+        // formData.append('Icon', iconpic);
+        // formData.append('Color', color);
+        // formData.append('Header', header);
+        // formData.append('Subheader', subheader);
+        // formData.append('Width', width);
+        // formData.append('Height', height);
+        // formData.append('Email', email);
+        // formData.append('Send-Notification', JSON.stringify(send_notif));
+        // formData.append('Live-Agent-Request', live_agent_req);
+        // formData.append('Send-Transcripts', JSON.stringify(send_transcripts));
+        // formData.append('Summary', JSON.stringify(summary));
+        // formData.append('Unsolved-Request', JSON.stringify(unresolved_req));
+        // formData.append('Ask-name', JSON.stringify(ask_name));
+        // formData.append('Ask-feedback', JSON.stringify(ask_feedback));
+        // formData.append('WelcomeMessages', welcomeMessages);
+        // formData.append('PopupMessages', popupMessages);
+        // formData.append('ConversationStarters', conversationStarters);
+        // formData.append('FallbackResponse', fallbackResponse);
+        // formData.append(
+        //   'LiveAgentAcknowledgeMessage',
+        //   liveAgentAcknowledgeMessage
+        // );
+        // formData.append('LiveAgentWaitMessage', liveAgentWaitMessage);
+        // formData.append('LiveAgentLeftMessage', liveAgentLeftMessage);
+        // formData.append('Company-Name', company_name);
+        // formData.append('Business-Website', business_website);
+        // formData.append('Persona-Name', persona_name);
+        // formData.append('CustomPrompt', customPrompt);
+        // formData.append('Temperature', JSON.stringify(temperature));
+        // formData.append('Response-Style', response_style);
+        // formData.append('Creativity', creativity);
+
+        // // Send the form data to the backend using AJAX
+        // $.ajax({
+        //   url: 'http://', // Replace with your backend endpoint URL
+        //   method: 'POST',
+        //   data: formData,
+        //   processData: false,
+        //   contentType: false,
+        //   success: function (response) {
+        //     // Handle the response from the backend
+        //     console.log('Data sent successfully');
+        //   },
+        //   error: function (error) {
+        //     // Handle any errors that occur during the AJAX request
+        //     console.error('Error:', error);
+        //   },
+        // });
+
+        bot_config = about_test;
+
+        console.log('about to make bot lel');
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', `Bearer ${current_access_token}`);
+
+        var formdata = new FormData();
+        formdata.append('pdf', pdfInput.files[0]);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow',
+        };
+
+        fetch(
+          `http://165.22.120.224:8001/bots/create/?bot_config=${bot_config}`,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => alert(`bot with ID of ${result.ID} was created! `))
+          .catch((error) => alert('error', error));
+
+        // finishOnboarding
+      });
     </script>
 
-    <script src="https://kit.fontawesome.com/bf8bc74aaf.js" crossorigin="anonymous"></script>
-</body>
-
+    <script
+      src="https://kit.fontawesome.com/bf8bc74aaf.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

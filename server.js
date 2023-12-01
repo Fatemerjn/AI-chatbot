@@ -27,7 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // connect to mongodb
-mongoose.connect(keys.mongodb.dbURI);
+// mongoose.connect(keys.mongodb.dbURI);
 
 // set up routes
 app.get('/', (req, res) => {

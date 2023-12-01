@@ -20,8 +20,6 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        height: 50%;
-        min-height: 300px;
         width: 30%;
         background-color: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -76,7 +74,7 @@
       /* Style the submit button */
       .form-container button {
         width: 100%;
-        padding: 10px;
+        padding: 15px;
         background-color: #007bff;
         color: #fff;
         border: none;
@@ -106,27 +104,60 @@
   <body>
     <div class="login-container">
       <h1>Bles</h1>
-      <h3>Join Us Today!</h3>
-      <!-- <form method="POST" class="form-container">
+      <h3>Login</h3>
+      <form id="myForm" class="form-container">
         <label for="email">Email</label>
-        <input type="email" placeholder="email" name="email" />
+        <input type="email" placeholder="email" name="email" id="email" />
         <label for="password">Password</label>
-        <input type="password" placeholder="password" name="password" />
+        <input
+          type="password"
+          placeholder="password"
+          name="password"
+          id="password"
+        />
         <button type="submit">login</button>
-      </form> -->
-      <p style="padding: 5px">Sign in with your Stripe account:</p>
-      <a href="stripe" class="google-login-button" style="text-decoration: none"
-        >Login with Stripe</a
+      </form>
+      <strong
+        style="margin: 5px; padding: 5px; display: flex; flex-direction: column"
       >
-      <strong style="margin: 5px; padding: 5px">
-        <a href="/" style="text-decoration: none; color: #0275d8"> Return </a>
+        <a href="/auth/register" style="text-decoration: none; color: #0275d8">
+          Create an Account
+        </a>
+        <a
+          href="/"
+          style="text-decoration: none; color: #0275d8; margin-top: 5px"
+        >
+          Return
+        </a>
       </strong>
-      <!-- <div class="nav-container">
-        <ul>
-          <li><a href="/">Return</a></li>
-          <li><a href="/auth/register">Register</a></li>
-        </ul>
-      </div> -->
     </div>
+    <script>
+      document
+        .getElementById('myForm')
+        .addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          var email = document.getElementById('email').value;
+          var password = document.getElementById('password').value;
+
+          fetch(
+            `http://165.22.120.224:8001/users/login?email=${email}&password=${password}`,
+            {
+              method: 'POST',
+              headers: {
+                accept: 'application/json',
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              localStorage.setItem('bearer', data.access_token);
+              localStorage.setItem('email', email);
+              alert(
+                `Successfully logged into ${email}! token:${data.access_token}`
+              );
+            });
+        });
+    </script>
   </body>
 </html>
